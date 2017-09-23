@@ -1,9 +1,24 @@
+export default class Database {
+    constructor() {
+        this.dbConnection = connect();
+    }
+
+    initSchema() {
+        query()
+    }
+
+    query(string, values) {
+        actual query with postGres
+    }
+}
+
 const USERS_CREATE = `
         CREATE TABLE IF NOT EXISTS Users (
             user_id SERIAL UNIQUE,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
+            customer_id VARCHAR(255) NOT NULL,
             account_id VARCHAR(255) NOT NULL,
             PRIMARY KEY (user_id)
         );
@@ -13,6 +28,7 @@ const GROUPS_CREATE = `
         CREATE TABLE IF NOT EXISTS Groups (
             group_id SERIAL UNIQUE,
             group_name VARCHAR(255) NOT NULL,
+            customer_id VARCHAR(255) NOT NULL,
             account_id VARCHAR(255) NOT NULL,
             PRIMARY KEY (group_id)
         );
