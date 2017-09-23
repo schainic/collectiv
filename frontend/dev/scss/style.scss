@@ -2,9 +2,12 @@
 
 $green: #2E7D32;
 $green-hover: lighten($green, 20%);
+$light-gray: #E0E0E0;
 $gray: #616161;
 $white: #fff;
 $shadow: rgba(#000, 0.3);
+
+$header-size: 80px;
 
 body {
     margin: 0;
@@ -83,5 +86,20 @@ button, input[type="submit"], .btn {
     }
     &:hover {
         background: $green-hover;
+    }
+}
+
+div.groups-wrapper {
+    height: calc(100vh - #{$header-size});
+    display: flex;
+    .group-names {
+        width: 350px;
+        height: inherit;
+        background: $light-gray;
+        border-right: 1px solid $gray;
+    }
+    .group-details {
+        flex-grow: 1;
+        height: inherit;
     }
 }
