@@ -9,6 +9,8 @@
   "author": "Austin Dudas",
   "license": "ISC",
   "dependencies": {
-    "react": "^15.6.1"
-  }
+    "react": "^15.6.1",
+    "redux": "^3.7.2"
+  },
+  "repository": "https://github.com/schainic/collectiv.git"
 }
