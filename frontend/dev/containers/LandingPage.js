@@ -1,12 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { getUserInfo } from '../functions/getUserInfo.js';
 
 class LandingPage extends React.Component {
     constructor(props) {
         super(props);
 
         // Bind functions
-        // this.handleInputChange = this.handleInputChange.bind(this);
+        this.userInfoCallback = this.userInfoCallback.bind(this);
+
+        getUserInfo(this.userInfoCallback);
+    }
+
+    userInfoCallback(user) {
+        if (user) {
+            this.props.history.push('/groups/');
+        }
     }
 
     render() {
@@ -20,5 +29,7 @@ class LandingPage extends React.Component {
         );
     }
 }
+
+LandingPage = withRouter(LandingPage);
 
 module.exports = {LandingPage};

@@ -53,6 +53,8 @@ class _Server {
 
 		this._server.get("/api/groups", UserManager.GetUsersGroups.bind(UserManager));
 
+		this._server.get("/api/*", (request, response, next) => { response.end(); });
+
 		this._server.get("*", (request, response, next) => {
 			response.sendFile(path.resolve(__dirname, "../../index.html"));
 		});
