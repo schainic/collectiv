@@ -47,10 +47,10 @@ class _AuthManager {
 
     me(request, response, next) {
         if (request.user) {
-            response.status(200).json({ loggedIn: true, user: request.user });
+            response.status(200).json({ logged_in: true, user: request.user });
         }
         else {
-            response.status(200).json({ loggedIn: false, user: null });
+            response.status(200).json({ logged_in: false, user: null });
         }
     }
 
