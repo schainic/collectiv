@@ -9,6 +9,7 @@ import Config from "./config/Config.js";
 import AuthManager from "./lib/AuthManager.js";
 import UserManager from "./lib/UserManager.js";
 import GroupManager from "./lib/GroupManager.js";
+import FundManager from "./lib/FundManager.js";
 
 class _Server {
     constructor() {
