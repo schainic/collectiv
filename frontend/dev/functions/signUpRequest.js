@@ -2,7 +2,7 @@
 // var request = require('request');
 const http = require('http');
 
-function sendSignUpRequest(name, email, password) {
+function sendSignUpRequest(name, email, password, callback) {
 
 	var postData = {
 		"name": name,
@@ -26,9 +26,7 @@ function sendSignUpRequest(name, email, password) {
 		});
 
 		res.on('end', () => {
-			console.log(res.headers);
-			console.log(body);
-			// do stuff here
+			callback(res, body);
 		});
 
 		res.on('error', (e) => {

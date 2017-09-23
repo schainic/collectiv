@@ -9,6 +9,9 @@ import {Textbox} from './components/Textbox.js';
 import {Header} from './components/Header.js';
 import {LoginPage} from './containers/LoginPage.js';
 import {SignUpPage} from './containers/SignUpPage.js';
+import {LandingPage} from './containers/LandingPage.js';
+
+
 
 class App extends React.Component {
   render () {
@@ -16,12 +19,7 @@ class App extends React.Component {
         <Router>
             <div>
                 <Header/>
-                <Route exact path="/" render={() =>
-                    <div>
-                        <Link to="/login/">login</Link><br/>
-                        <Link to="/signup/">Sign up</Link>
-                    </div>
-                } />
+                <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login/" component={LoginPage} />
                 <Route exact path="/signup/" component={SignUpPage} />
             </div>

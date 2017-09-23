@@ -1,20 +1,42 @@
-var request = require('request');
+// var fs = require('fs');
+// var request = require('request');
+const http = require('http');
 
-function sendLoginRequest(username, password) {
+function sendLoginRequest(email, password, callback) {
 
-	var JSONLoginInfo = {
-		"name": username,
-		"pass": password
+	var postData = {
+		"email": email,
+		"password": password
 	};
 
-	request({
-		url: '/api/auth/signin',
-		json: true,
-		body: JSONLoginInfo,
-		method: "POST"
-	}, function(error, response, body) {
-		console.log(response);
+	const options = {
+		method: 'POST',
+		path: '/api/auth/signin',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}
+
+	var req = http.request(options, (res) => {
+		var body = '';
+		res.setEncoding('utf8');
+		res.on('data', (chunk) => {
+			body += chunk.toString();
+		});
+
+		res.on('end', () => {
+			callback(res, body);
+		});
+
+		res.on('error', (e) => {
+			console.log(`Error: ${e.message}`);
+		});
+
 	});
+
+	req.write(JSON.stringify(postData));
+	req.end();
+
 }
 
 module.exports = { sendLoginRequest }
