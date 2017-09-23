@@ -21,6 +21,10 @@ class _Config {
     get postgres() {
         return cloneDeep(this._postgres);
     }
+
+    get secret() {
+        return cloneDeep(this._secret);
+    }
 }
 
 const Config = new _Config();
