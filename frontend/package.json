@@ -4,14 +4,19 @@
   "description": "MHacks X submission",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "./node_modules/.bin/http-server -p 8000",
+    "build": "./node_modules/.bin/webpack -d"
   },
   "author": "Austin Dudas",
   "license": "ISC",
   "dependencies": {
     "react": "^15.6.1",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "webpack": "^3.6.0"
   },
-  "repository": "https://github.com/schainic/collectiv.git"
+  "repository": "https://github.com/schainic/collectiv.git",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
 }
