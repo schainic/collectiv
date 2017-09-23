@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+// Require things we need
+const chokidar = require('chokidar');
+const sass = require('node-sass');
+const fs = require('fs');
+const autoprefixer = require('autoprefixer');
+const postcss = require('postcss');
+
+// Get config information
+var config = JSON.parse(fs.readFileSync("scss-compile.config.json"));
+var src = config.inputFile;
+var dest = config.outputFile;
+var dependencies = config.dependencies;
+
+// Watch dependencies for a change
+var watcher = chokidar.watch(dependencies);
+
+watcher.on('change', (path, stats) => {
+    prepareScss(src, dest);
+});
+
+function prepareScss(src, dest) {
+    sass.render({
+        file: src
+    },
+    (error, result) => {
+        if (!error) {
+            prefix(src, dest, result.css);
+        }
+        else {
+            console.log('Error with scss compilation:', error.message);
+        }
+    });
+}
+
+function prefix(src, dest, css) {
+    postcss([ autoprefixer ]).process(css/*, { from: src, to: dest }*/).then( result => {
+        // Deal with warnings
+        result.warnings().forEach( (warn) => {
+            console.log(warn.toString());
+        });
+        // Write prefixed version of file
+        wf(dest, result.css);
+        console.log('success');
+    });
+}
+
+function wf(outputFile, content) {
+    fs.writeFile(outputFile, content, (err) => {
+        if (err) console.log('Error writing to file ' + outputFile);
+    });
+}

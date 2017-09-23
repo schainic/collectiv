@@ -1,0 +1,5 @@
+{
+    "outputFile" : "build/css/style.css",
+    "inputFile": "dev/scss/style.scss",
+    "dependencies": "dev/scss/*.scss"
+}
