@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { sendSignUpRequest } from '../functions/signUpRequest.js';
 import { AlertMessage } from '../components/AlertMessage.js';
 
@@ -28,11 +29,7 @@ class SignUpPage extends React.Component {
 
     responseCallback(res, body) {
         if (res.statusCode == 200) {
-            this.setState({
-                alertVisible: true,
-                alertText: 'Sign up success!',
-                alertType: 'success'
-            });
+            this.props.history.push('/groups/');
         }
         else {
             this.setState({
@@ -89,5 +86,7 @@ class SignUpPage extends React.Component {
         );
     }
 }
+
+SignUpPage = withRouter(SignUpPage);
 
 module.exports = {SignUpPage};
