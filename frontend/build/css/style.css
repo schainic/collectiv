@@ -30,6 +30,25 @@ div.header {
     padding: 8px 0px;
     margin: 0; }
 
+.landing-page {
+  height: 50vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  .landing-page .btn {
+    margin: 32px;
+    font-size: 32px; }
+
 form label {
   color: #616161;
   font-size: 20px;
@@ -46,7 +65,7 @@ form input[type="text"], form input[type="password"] {
     margin-bottom: 11px;
     outline: none; }
 
-button, input[type="submit"] {
+button, input[type="submit"], .btn {
   cursor: pointer;
   font-family: inherit;
   font-size: 20px;
@@ -56,8 +75,9 @@ button, input[type="submit"] {
   text-align: center;
   min-width: 128px;
   background: #2E7D32;
-  color: #fff; }
-  button:focus, input[type="submit"]:focus {
+  color: #fff;
+  text-decoration: none; }
+  button:focus, input[type="submit"]:focus, .btn:focus {
     outline: none; }
-  button:hover, input[type="submit"]:hover {
+  button:hover, input[type="submit"]:hover, .btn:hover {
     background: #52bf57; }
