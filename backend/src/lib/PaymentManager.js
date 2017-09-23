@@ -4,7 +4,6 @@ import UserManager from "./UserManager.js"
 import GroupManager from "./GroupManager.js"
 
 class _PaymentManager {
-
     constructor() {
 
     }
@@ -26,5 +25,5 @@ class _PaymentManager {
     }
 }
 
-const FundManager = new _FundManager();
-export default FundManager;
+const PaymentManager = new _PaymentManager();
+export default PaymentManager;
