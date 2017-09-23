@@ -47,10 +47,11 @@ class _Server {
 
     _initRoutes() {
 		this._server.post("/api/auth/signup", AuthManager.signUp.bind(AuthManager));
-		this._server.post("/api/auth/signin", AuthManager.signIn.bind(AuthManager));		
+		this._server.post("/api/auth/signin", AuthManager.signIn.bind(AuthManager));
+        this._server.get("/api/auth/me", AuthManager.me.bind(AuthManager));
 		// this._server.post("/api/auth/signout", AuthManager.signOut.bind(AuthManager));
 
-		this._server.get("/api/groups", GroupManager.GetUsersInGroup.bind(GroupManager));		
+		this._server.get("/api/groups", GroupManager.GetUsersInGroup.bind(GroupManager));
 
 		this._server.get("*", (request, response, next) => {
 			response.sendFile(path.resolve(__dirname, "../../index.html"));

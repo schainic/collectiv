@@ -45,6 +45,15 @@ class _AuthManager {
 		})(request, response, next);
 	}
 
+    me(request, response, next) {
+        if (request.user) {
+            response.status(200).json(request.user);
+        }
+        else {
+            response.status(401).json({ message: "Not logged in" });
+        }
+    }
+
     async _initPassport() {
 		this._passport.serializeUser((user, done) => {
 			done(null, {
