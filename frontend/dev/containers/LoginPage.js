@@ -11,14 +11,14 @@ class LoginPage extends React.Component {
     }
 
 	handleInputChange(e) {
-		
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		
+
+		const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
 		this.setState({
 			[e.target.name]:value
 		});
 	}
-	
+
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.email, this.state.pass);
@@ -32,11 +32,11 @@ class LoginPage extends React.Component {
                     <h1>Login</h1>
                     <div className="input-section">
                         <label htmlFor="email">Email:</label>
-                        <input name="email" type="text" value={this.state.email} onChange={this.handleChangeEmail}/>
+                        <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange}/>
                     </div>
                     <div className="input-section">
                         <label htmlFor="pass">Password:</label>
-                        <input name="pass" type="password" value={this.state.pass} onChange={this.handleChangePass}/>
+                        <input name="pass" type="password" value={this.state.pass} onChange={this.handleInputChange}/>
                     </div>
                     <input type="submit"/>
                 </form>
