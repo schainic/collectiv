@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/.bin/http-server -p 8000",
     "build": "./node_modules/.bin/webpack -d",
-    "dev": "./node_modules/.bin/webpack -d --watch"
+    "dev": "./node_modules/.bin/webpack -d --watch",
+    "scss-compiler": "./scss-compile"
   },
   "author": "Austin Dudas",
   "license": "ISC",
@@ -19,10 +20,15 @@
   },
   "repository": "https://github.com/schainic/collectiv.git",
   "devDependencies": {
+    "autoprefixer": "^7.1.4",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "http-server": "^0.10.0"
+    "chokidar": "^1.7.0",
+    "http-server": "^0.10.0",
+    "node-sass": "^4.5.3",
+    "postcss": "^6.0.11",
+    "react-router-dom": "^4.2.2"
   }
 }
