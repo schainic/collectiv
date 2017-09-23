@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
+import AuthManager from "./lib/AuthManager.js";
+
 class _Server {
     constructor() {
         this._server = express();
@@ -26,7 +28,7 @@ class _Server {
 
 		// Use session
 		let sessionConfig = {
-			secret: ServerConfig.sessionSecret,
+			secret: Config.sessionSecret,
 			resave: false,
 			saveUninitialized: true
 		}
@@ -38,7 +40,9 @@ class _Server {
     }
 
     _initRoutes() {
-
+		this._server.post("/api/auth/signup", this._ensureNotAuthorized, AuthManager.signUp.bind(AuthManager));
+		this._server.post("/api/auth/signin", this._ensureNotAuthorized, AuthManager.signIn.bind(AuthManager));
+		this._server.post("/api/auth/signout", this._ensureAuthorized, AuthManager.signOut.bind(AuthManager));
     }
 }
 
