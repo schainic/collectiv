@@ -3,7 +3,7 @@ var querystring = require('querystring');
 var http = require('http');
 import Config from '../config/Config.js';
 
-class CapitalOneApiManager {
+class _CapitalOneApiManager {
     constructor() {
 
     }
@@ -11,7 +11,7 @@ class CapitalOneApiManager {
 
     async CreateCustomer(FirstName, LastName, StreeNumber, StreetName, City, State, Zip)
     {
-        let newCustomer = querystring.stringify({
+        let newCustomer = {
             "first_name": FirstName,
             "last_name": LastName,
             "address": {
@@ -21,7 +21,7 @@ class CapitalOneApiManager {
                 "state": State,
                 "zip": Zip
             }
-        });
+        };
 
         let key;
 
@@ -34,14 +34,10 @@ class CapitalOneApiManager {
 
         let post_options = {
             host: 'api.reimaginebanking.com',
-            path: '/customers',
+            path: '/customers' + "?key=" + "7351bc52d9de611ae79dc1bc9cbafbaf",
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(newCustomer)
-            },
-            parameters: {
-                'key': key
+                'Content-Type': 'application/json'
             }
         };
 
@@ -53,7 +49,7 @@ class CapitalOneApiManager {
         });
 
         // post the data
-        post_req.write(newCustomer);
+        post_req.write(JSON.stringify(newCustomer));
         post_req.end();
     }
 
@@ -77,14 +73,10 @@ class CapitalOneApiManager {
 
         let post_options = {
             host: 'api.reimaginebanking.com',
-            path: '/customers/' + CustomerId + '/accounts' ,
+            path: '/customers/' + CustomerId + '/accounts' + "?key=" + key,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(newCustomer)
-            },
-            parameters: {
-                'key': key
             }
         };
 
@@ -96,7 +88,7 @@ class CapitalOneApiManager {
         });
 
         // post the data
-        post_req.write(newAccount);
+        post_req.write(JSON.stringify(newAccount));
         post_req.end();
     }
 
@@ -124,14 +116,10 @@ class CapitalOneApiManager {
 
         let post_options = {
             host: 'api.reimaginebanking.com',
-            path: '/accounts/' + PayerId + '/transfers' ,
+            path: '/accounts/' + PayerId + '/transfers' + "?key=" + key,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(newCustomer)
-            },
-            parameters: {
-                'key': key
             }
         };
 
@@ -143,11 +131,11 @@ class CapitalOneApiManager {
         });
 
         // post the data
-        post_req.write(newTransfer);
+        post_req.write(JSON.stringify(newTransfer));
         post_req.end();
     }
-
-    async getAccount(AccountId){
+    
+    async GetAccount(AccountId){
         let key;
 
         try{
@@ -159,13 +147,10 @@ class CapitalOneApiManager {
 
         let get_options = {
             host: 'api.reimaginebanking.com',
-            path: '/accounts/' + AccountId,
+            path: '/accounts/' + AccountId + "?key=" + key,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            parameters: {
-                'key': key
             }
         };
 
@@ -186,19 +171,16 @@ class CapitalOneApiManager {
         try{
             key = await Config.CapitalOne.ApiKey;
         }catch(e) {
-            console.log("Failed to retreive APIKEY for Capital one!!! in getAccount() lol shit motherfucker!");
+            console.log("Failed to retreive APIKEY for Capital one!!! in getCustomer() lol shit motherfucker!");
         }
 
 
         let get_options = {
             host: 'api.reimaginebanking.com',
-            path: '/customers/' + CustomerId,
+            path: '/customers/' + CustomerId + "?key=" + key,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            parameters: {
-                'key': key
             }
         };
 
@@ -215,3 +197,7 @@ class CapitalOneApiManager {
 
 
 }
+
+const CapitalOneApiManager = new _CapitalOneApiManager();
+
+export default CapitalOneApiManager;
