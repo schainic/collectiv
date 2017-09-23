@@ -50,7 +50,7 @@ class _AuthManager {
             response.status(200).json(request.user);
         }
         else {
-            response.status(401).json({ message: "Not logged in" });
+            response.status(200).json({ user_id: null });
         }
     }
 
