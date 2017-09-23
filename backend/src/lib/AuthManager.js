@@ -45,6 +45,15 @@ class _AuthManager {
 		})(request, response, next);
 	}
 
+    me(request, response, next) {
+        if (request.user) {
+            response.status(200).json(request.user);
+        }
+        else {
+            response.status(401).json({ message: "Not logged in" });
+        }
+    }
+
     async _initPassport() {
 		this._passport.serializeUser((user, done) => {
 			done(null, {
@@ -72,7 +81,7 @@ class _AuthManager {
 	}
 
 	async _createUser(json) {
-		let newCustomer = await CapitalOneApiManager.CreateCustomer(json.name, " ", "427", "Hamilton Pl", "Ann Arbor", "MI", "48104");
+		let newCustomer = await CapitalOneApiManager.CreateCustomer(json.name, " ", "420", "HAM HOUSE", "Ann Arbor", "MI", "48104");
 		let newAccount = await CapitalOneApiManager.CreateAccount(newCustomer.objectCreated._id, json.name);
 
 		let newUser = {
