@@ -12,22 +12,29 @@ class _UserManager {
             "SELECT * FROM Users WHERE user_id = $1", [User_id]);
     }
 
-    GetUsersGroups(request, response) {
+     GetUsersGroups(request, response) {
         let User_id = request.user.user_id;
-       
+        let Qresult = {};
 
             try {
-                let result = await Database.query(`SELECT * FROM
-                GroupsUsers gpusr JOIN Groups grp ON grp.group_id = gpusr.group_id 
-                WHERE gpusr.user_id = $1`
-                , [User_id]);
+                Database.query(`SELECT * FROM
+                GroupsUsers JOIN Groups ON Groups.group_id = GroupsUsers.group_id 
+                WHERE GroupsUsers.user_id = $1`
+                , [User_id]).then(result => {
+             Qresult = result;   
+                
+            });
+              
             }
             catch(e){
+                console.log(Qresult);
+                
                 response.status(500).json({"Error":"Can't retrieve user's groups"});
             }
+            console.log(Qresult);
+            
 
-
-        response.status(200).json(result);
+        response.status(200).json(Qresult);
 
 
     }
