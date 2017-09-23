@@ -11,7 +11,16 @@ class _Database {
         return this._connection.query(query, args);
     }
 
-    initSchema() {
+    async _createTables() {
+        _CREATES.forEach(async (query) => {
+            await this.query(query);
+        })
+    }
+
+    async _dropTables() {
+        _TABLES.forEach(async (tableName) => {
+            await this.query("DROP TABLE IF EXISTS $1 CASCADE;", [tableName]);
+        });
     }
 }
 
@@ -24,6 +33,8 @@ const _pgConfig = {
     max: 10,
     idleTimeoutMillis: 3000
 }
+
+const _TABLES = ["Users", "Groups", "GroupsUsers", "Funds"];
 
 const _USERS_CREATE = `
         CREATE TABLE IF NOT EXISTS Users (
@@ -69,6 +80,8 @@ const _FUNDS_CREATE = `
 			CONSTRAINT group FOREIGN KEY (group_id) REFERENCES items (group_id) MATCH SIMPLE ON DELETE SET NULL
         );
 `;
+
+const _CREATES = [_USERS_CREATE, _GROUPS_CREATE, _GROUPS_USERS_CREAATE, _FUNDS_CREATE];
 
 const Database = new _Database();
 export default Database;
