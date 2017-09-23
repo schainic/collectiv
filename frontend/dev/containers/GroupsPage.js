@@ -1,6 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import {GroupThumb} from '../components/GroupThumb.js';
+import {GroupDetails} from '../components/GroupDetails.js';
+import { getUserInfo } from '../functions/getUserInfo.js';
+import { getGroupNames } from '../functions/getGroupNames.js';
+
 
 class GroupsPage extends React.Component {
 
@@ -8,10 +12,27 @@ class GroupsPage extends React.Component {
         super(props);
         this.state = {
             currentGroup: null,
-            groupsList: [{name: 'group1', id: 1}, {name: 'group2', id: 2}]
+            groupsList: []
         }
 
         this.groupThumbClick = this.groupThumbClick.bind(this);
+        this.groupNamesCallback = this.groupNamesCallback.bind(this);
+        this.userInfoCallback = this.userInfoCallback.bind(this);
+
+        getUserInfo(this.userInfoCallback);
+    }
+
+    userInfoCallback(user) {
+        if (user) {
+            getGroupNames(this.groupNamesCallback);
+        }
+        else {
+            this.props.history.push('/');
+        }
+    }
+
+    groupNamesCallback(arr) {
+        this.setState({groupsList: arr});
     }
 
     groupThumbClick(groupID) {
@@ -26,6 +47,9 @@ class GroupsPage extends React.Component {
         if (this.state.groupsList.length == 0) {
             groupNamesContent = (
                 <div className="group-names">
+                    <div className="section-header">
+                        Your groups
+                    </div>
                     <p>No groups!</p>
                 </div>
             );
@@ -33,9 +57,12 @@ class GroupsPage extends React.Component {
         else {
             groupNamesContent = (
                 <div className="group-names">
+                    <div className="section-header">
+                        Your groups
+                    </div>
                     { this.state.groupsList.map( (g) => {
                         return (
-                            <GroupThumb name={g.group_name} key={g.id} onClick={that.groupThumbClick(g.group_id)} />
+                            <GroupThumb name={g.group_name} key={g.group_id} handleClick={that.groupThumbClick(g.group_id)} />
                         );
                     })}
                 </div>
@@ -47,7 +74,10 @@ class GroupsPage extends React.Component {
                 { groupNamesContent }
 
 				<div className="group-details">
-
+                    <div className="section-header">
+                        Group details
+                    </div>
+                    <GroupDetails group={this.state.currentGroup}/>
 				</div>
             </div>
         );

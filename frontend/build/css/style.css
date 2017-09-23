@@ -87,11 +87,41 @@ div.groups-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
+  div.groups-wrapper .section-header {
+    font-size: 1.2em;
+    background: #43A047;
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 56px;
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); }
   div.groups-wrapper .group-names {
     width: 350px;
     height: inherit;
     background: #E0E0E0;
     border-right: 1px solid #616161; }
+    div.groups-wrapper .group-names .group-thumb {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      height: 48px;
+      border-bottom: 1px solid #616161; }
+      div.groups-wrapper .group-names .group-thumb:hover {
+        background: #c7c7c7; }
   div.groups-wrapper .group-details {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
