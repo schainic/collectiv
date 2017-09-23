@@ -1,9 +1,14 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Textbox} from './components/Textbox.js';
 
 class App extends React.Component {
   render () {
-    return <p> Hello React - test again!</p>;
+    return (
+        <div>
+            <Textbox/>
+        </div>
+    );
   }
 }
 
