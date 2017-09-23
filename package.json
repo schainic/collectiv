@@ -1,0 +1,14 @@
+{
+  "name": "collectiv",
+  "version": "0.0.0",
+  "description": "MHacks X submission",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Austin Dudas",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.6.1"
+  }
+}
