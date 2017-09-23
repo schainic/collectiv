@@ -17,8 +17,8 @@ class _UserManager {
        
 
             try {
-                let result = await Database.query(`SELECT grp.group_id, grp.group_name FROM
-                GroupUsers gpusr LEFT OUTER JOIN Groups grp ON grp.group_id = gpusr.group_id 
+                let result = await Database.query(`SELECT * FROM
+                GroupsUsers gpusr JOIN Groups grp ON grp.group_id = gpusr.group_id 
                 WHERE gpusr.user_id = $1`
                 , [User_id]);
             }
