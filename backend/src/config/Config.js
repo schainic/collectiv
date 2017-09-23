@@ -11,6 +11,7 @@ class _Config {
 
         this._capitalOne = config.CapitalOne;
         this._postgres = config.Postgres;
+        this._secret = config.Secret;
     }
 
     get capitalOne() {
