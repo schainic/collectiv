@@ -4,6 +4,7 @@ import {GroupThumb} from '../components/GroupThumb.js';
 import {GroupDetails} from '../components/GroupDetails.js';
 import { getUserInfo } from '../functions/getUserInfo.js';
 import { getGroupNames } from '../functions/getGroupNames.js';
+import { getGroupObject } from '../functions/getGroupObject.js';
 
 
 class GroupsPage extends React.Component {
@@ -18,6 +19,7 @@ class GroupsPage extends React.Component {
         this.groupThumbClick = this.groupThumbClick.bind(this);
         this.groupNamesCallback = this.groupNamesCallback.bind(this);
         this.userInfoCallback = this.userInfoCallback.bind(this);
+        this.loadGroupDescription = this.loadGroupDescription.bind(this);
 
         getUserInfo(this.userInfoCallback);
     }
@@ -36,9 +38,16 @@ class GroupsPage extends React.Component {
     }
 
     groupThumbClick(groupID) {
+        var cb = this.loadGroupDescription;
         return (ev) => {
-            console.log(groupID);
+            getGroupObject(groupID, cb);
         };
+    }
+
+    loadGroupDescription(group) {
+        if (group) {
+            this.setState({currentGroup: group});
+        }
     }
 
     render() {
