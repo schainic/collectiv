@@ -16,7 +16,7 @@ class App extends React.Component {
             <div>
                 <Header/>
                 <Route exact path="/" render={() =>
-                    <Link to="/background/">Background</Link>
+                    <Link to="/login/">login</Link>
                 } />
                 <Route exact path="/login/" component={LoginPage} />
             </div>
