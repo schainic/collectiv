@@ -21,6 +21,7 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        console.log(this.state.email, this.state.pass);
         // Dispatch action?
     }
 
@@ -29,8 +30,14 @@ class LoginPage extends React.Component {
             <div className="body-content">
                 <form className="login-form" onSubmit={this.handleSubmit}>
                     <h1>Login</h1>
-                    <input type="text" value={this.state.email} onChange={this.handleChangeEmail}/>
-                    <input type="password" value={this.state.pass} onChange={this.handleChangePass}/>
+                    <div className="input-section">
+                        <label htmlFor="email">Email:</label>
+                        <input id="email" type="text" value={this.state.email} onChange={this.handleChangeEmail}/>
+                    </div>
+                    <div className="input-section">
+                        <label htmlFor="pass">Password:</label>
+                        <input id="pass" type="password" value={this.state.pass} onChange={this.handleChangePass}/>
+                    </div>
                     <input type="submit"/>
                 </form>
             </div>
