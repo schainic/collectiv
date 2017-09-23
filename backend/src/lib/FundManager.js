@@ -1,4 +1,4 @@
-import Database from "Database.js";
+import Database from "./Database.js";
 
 
 class _FundManager {

@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
 
 import Database from "./Database.js";
+import CapitalOneApiManager from "./CapitalOneApiManager.js"
 
 class _AuthManager {
     constructor() {
@@ -13,7 +14,7 @@ class _AuthManager {
     }
 
 	signUp(request, response, next) {
-		this.createUser(request.body).then((result) => {
+		this._createUser(request.body).then((result) => {
 			this.signIn(request, response, next);
 		}).catch((err) => {
 			response.status(500).json({ message: err });
@@ -68,7 +69,24 @@ class _AuthManager {
 				done(e, null);
 			}
 		});
-    }
+	}
+	
+	async _createUser(json) {
+		
+		let newCustomer = CapitalOneApiManager.CreateCustomer(json.name, " ", "N/A", "N/A", "N/A", "N/A", "N/A");
+		let newAccount = CapitalOneApiManager.CreateAccount(newCustomer._id);
+	
+		let newUser = {
+			name: json.name,			
+			email: json.email,
+			password: bcrypt.hashSync(json.password, bcrypt.genSaltSync()),
+			customer_id: newCustomer._id,
+			account_id: newAccount._id,
+			};
+			
+		let result = await Database.query("INSERT INTO users (name, email, password, customer_id, account_id) VALUES ($1, $2, $3, $4, $5);", 
+		[newUser.name, newUser.email, newUser.password, newUser.customer_id, newUser.account_id]);
+	};
 
     async _initStrategies() {
 		const options = {
