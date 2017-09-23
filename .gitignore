@@ -2,3 +2,5 @@
 */build
 backend/src/config/Config.json
 *.swp
+backend/src/config/server.key
+backend/src/config/server.crt
