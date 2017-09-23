@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { sendLoginRequest } from '../functions/loginRequest.js';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -8,6 +10,18 @@ class LoginPage extends React.Component {
         // Bind functions
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.responseCallback = this.responseCallback.bind(this);
+    }
+
+    responseCallback(res, body) {
+        if (res.statusCode == 200) {
+            // login success
+            this.props.history.push('/groups/');
+        }
+        else {
+            alert('Login failed');
+            this.setState({email: '', pass: ''});
+        }
     }
 
 	handleInputChange(e) {
@@ -21,8 +35,12 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state.email, this.state.pass);
-        // Dispatch action?
+        if (this.state.email.length == 0 || this.state.pass.length == 0) {
+            alert('Missing email or password!');
+        }
+        else {
+            sendLoginRequest(this.state.email, this.state.pass, this.responseCallback);
+        }
     }
 
     render() {
@@ -44,5 +62,7 @@ class LoginPage extends React.Component {
         );
     }
 }
+
+LoginPage = withRouter(LoginPage);
 
 module.exports = {LoginPage};

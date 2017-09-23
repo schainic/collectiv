@@ -1,14 +1,21 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { sendSignUpRequest } from '../functions/signUpRequest.js';
+import { AlertMessage } from '../components/AlertMessage.js';
 
 class SignUpPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', pass: '', name: '', confirmPass: ''};
+        this.state = {email: '', pass: '', name: '', confirmPass: '',
+            alertVisible: false,
+            alertText: '',
+            alertType: ''
+        };
 
         // Bind functions
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.responseCallback = this.responseCallback.bind(this);
     }
 
 	handleInputChange(e) {
@@ -19,6 +26,20 @@ class SignUpPage extends React.Component {
 			[e.target.name]:value
 		});
 	}
+
+    responseCallback(res, body) {
+        if (res.statusCode == 200) {
+            this.props.history.push('/groups/');
+        }
+        else {
+            this.setState({
+                alertVisible: true,
+                alertText: 'Error with sign up: ' + res.statusCode,
+                alertType: 'error'
+            })
+        }
+        return;
+    }
 
     handleSubmit(e) {
         e.preventDefault();
@@ -31,7 +52,8 @@ class SignUpPage extends React.Component {
             alert("Password and confirm password do not match");
         }
         else {
-            sendSignUpRequest(this.state.name, this.state.email, this.state.pass);
+            console.log('Function: ' + this.responseCallback);
+            sendSignUpRequest(this.state.name, this.state.email, this.state.pass, this.responseCallback);
         }
 
     }
@@ -58,10 +80,13 @@ class SignUpPage extends React.Component {
                         <input name="confirmPass" type="password" value={this.state.confirmPass} onChange={this.handleInputChange}/>
                     </div>
                     <input type="submit"/>
+                    <AlertMessage visible={this.state.alertVisible} type={this.state.alertType} text={this.state.alertText} />
                 </form>
             </div>
         );
     }
 }
+
+SignUpPage = withRouter(SignUpPage);
 
 module.exports = {SignUpPage};
