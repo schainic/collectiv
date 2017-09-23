@@ -1,6 +1,5 @@
 */node_modules
 */build
-backend/src/config/Config.json
+backend/src/config/*
+!backend/src/config/Config.js
 *.swp
-backend/src/config/server.key
-backend/src/config/server.crt
