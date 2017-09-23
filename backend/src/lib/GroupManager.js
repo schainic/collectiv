@@ -33,8 +33,8 @@ class _GroupManager {
                 
                 Database.query(
                     `SELECT fnds.fund_id, fnds.fund_name, fnds.balance
-                    FROM Funds
-                    WHERE Funds.group_id = $1;`
+                    FROM Funds fnds
+                    WHERE fnds.group_id = $1;`
                     , [request.query.id])
                     .then(Fresult => {
                        let Fundresult = Fresult.rows;
