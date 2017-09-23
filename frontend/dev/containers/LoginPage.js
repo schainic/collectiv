@@ -3,28 +3,37 @@ import React from 'react';
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {email: '', pass: ''};
 
         // Bind functions
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangePass = this.handleChangePass.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
-        this.setState({value: e.target.value});
+    handleChangeEmail(e) {
+        this.setState({email: e.target.value});
+    }
+
+    handleChangePass(e) {
+        this.setState({pass: e.target.value});
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        document.body.style.backgroundColor = this.state.value;
+        // Dispatch action?
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                <input type="submit"/>
-            </form>
+            <div className="body-content">
+                <form className="login-form" onSubmit={this.handleSubmit}>
+                    <h1>Login</h1>
+                    <input type="text" value={this.state.email} onChange={this.handleChangeEmail}/>
+                    <input type="password" value={this.state.pass} onChange={this.handleChangePass}/>
+                    <input type="submit"/>
+                </form>
+            </div>
         );
     }
 }
