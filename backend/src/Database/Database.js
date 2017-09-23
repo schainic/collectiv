@@ -1,18 +1,42 @@
-export default class Database {
+const pg = require("pg");
+
+import Config from "../config/Config.js"
+
+class _Database {
     constructor() {
-        this.dbConnection = connect();
+        this._connection = new pg.Pool(_pgConfig);
     }
 
-    initSchema() {
-        query()
+    query(query, args) {
+        return this._connection.query(query, args);
     }
 
-    query(string, values) {
-        actual query with postGres
+    async _createTables() {
+        _CREATES.forEach(async (query) => {
+            await this.query(query);
+        })
+    }
+
+    async _dropTables() {
+        _TABLES.forEach(async (tableName) => {
+            await this.query("DROP TABLE IF EXISTS $1 CASCADE;", [tableName]);
+        });
     }
 }
 
-const USERS_CREATE = `
+const _pgConfig = {
+    user: Config.postgres.user,
+    database: Config.postgres.database,
+    password: Config.postgres.password,
+    host: Config.postgres.host,
+    port: Config.postgres.port,
+    max: 10,
+    idleTimeoutMillis: 3000
+}
+
+const _TABLES = ["Users", "Groups", "GroupsUsers", "Funds"];
+
+const _USERS_CREATE = `
         CREATE TABLE IF NOT EXISTS Users (
             user_id SERIAL UNIQUE,
             name VARCHAR(255) NOT NULL,
@@ -24,7 +48,7 @@ const USERS_CREATE = `
         );
 `;
 
-const GROUPS_CREATE = `
+const _GROUPS_CREATE = `
         CREATE TABLE IF NOT EXISTS Groups (
             group_id SERIAL UNIQUE,
             group_name VARCHAR(255) NOT NULL,
@@ -34,7 +58,7 @@ const GROUPS_CREATE = `
         );
 `;
 
-const GROUPS_USERS_CREAATE = `
+const _GROUPS_USERS_CREAATE = `
         CREATE TABLE IF NOT EXISTS GroupsUsers (
             user_id INTEGER NOT NULL,
             group_id INTEGER NOT NULL,
@@ -44,7 +68,7 @@ const GROUPS_USERS_CREAATE = `
         );
 `;
 
-const FUNDS_CREATE = `
+const _FUNDS_CREATE = `
         CREATE TABLE IF NOT EXISTS Funds (
             fund_id SERIAL UNIQUE,
             fund_name VARCHAR(255),
@@ -56,3 +80,8 @@ const FUNDS_CREATE = `
 			CONSTRAINT group FOREIGN KEY (group_id) REFERENCES items (group_id) MATCH SIMPLE ON DELETE SET NULL
         );
 `;
+
+const _CREATES = [_USERS_CREATE, _GROUPS_CREATE, _GROUPS_USERS_CREAATE, _FUNDS_CREATE];
+
+const Database = new _Database();
+export default Database;
