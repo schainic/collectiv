@@ -72,7 +72,7 @@ class CapitalOneApiManager {
         try{
             key = await Config.CapitalOne.ApiKey;
         }catch(e) {
-            console.log("Failed to retreive APIKEY for Capital one!!! in createcustomrer() lol shit motherfucker!");
+            console.log("Failed to retreive APIKEY for Capital one!!! in CreateAccount() lol shit motherfucker!");
         }
 
 
@@ -119,7 +119,7 @@ class CapitalOneApiManager {
         try{
             key = await Config.CapitalOne.ApiKey;
         }catch(e) {
-            console.log("Failed to retreive APIKEY for Capital one!!! in createcustomrer() lol shit motherfucker!");
+            console.log("Failed to retreive APIKEY for Capital one!!! in CreateTransfer() lol shit motherfucker!");
         }
 
 
@@ -146,6 +146,34 @@ class CapitalOneApiManager {
         // post the data
         post_req.write(newTransfer);
         post_req.end();
+    }
+
+    function getAccount(AccountId){
+        var str = '';
+
+        var options = {
+            host: 'api.reimaginebanking.com',
+            path: '/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
+        };
+
+        callback = function(response) {
+
+            response.on('data', function (chunk) {
+                str += chunk;
+            });
+
+            response.on('end', function () {
+                console.log(str);
+            });
+
+            //return str;
+        }
+
+        var req = http.request(options, callback).end();
+
+        // These just return undefined and empty
+        console.log(req.data);
+        console.log(str);
     }
 
 
