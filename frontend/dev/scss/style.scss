@@ -90,16 +90,16 @@ button, input[type="submit"], .btn {
 }
 
 div.groups-wrapper {
-    height: calc(100vh - $header-size);
+    height: calc(100vh - #{$header-size});
     display: flex;
     .group-names {
         width: 350px;
-        min-height: inherit;
+        height: inherit;
         background: $light-gray;
         border-right: 1px solid $gray;
     }
     .group-details {
         flex-grow: 1;
-        min-height: inherit;
+        height: inherit;
     }
 }
