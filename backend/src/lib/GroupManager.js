@@ -21,43 +21,35 @@ class _GroupManager {
         return Database.query("SELECT * FROM Funds WHERE group_id = $1", [Group_id]);
     }
 
-    /*
-    const createPostQuery = `WITH data(user_id, created_at, type, title, content) AS (
-VALUES ($1::INTEGER, $2::TIMESTAMPTZ , CHAR(1) 'p', $3::TEXT , $4::JSON)
-),
-item AS (
-INSERT INTO items (user_id, created_at, type)
-SELECT user_id, created_at, type FROM data
-RETURNING user_id, id
-),
-insert_post AS (
-INSERT INTO posts (id, title, content)
-SELECT id, title, content
-FROM data
-JOIN item USING (user_id)
-)
-SELECT id FROM item;`; */
+     CreateGroup(request, response) {
+        CapitalOneApiManager.CreateCustomer(request.body.group_name, " ", "420", "HAM HOUSE", "Ann Arbor", "MI", "48104").then(Cresult => {
+            let newCustomer = Cresult;
+            CapitalOneApiManager.CreateAccount(newCustomer.objectCreated._id, request.body.group_name).then(Aresult => {
+                let newAccount = Aresult;
+                let newGroup = {
+                    group_name: request.body.group_name,
+                    customer_id: newCustomer.objectCreated._id,
+                    account_id: newAccount.objectCreated._id,
+                    };
+        
+                let result = Database.query(`WITH new_group AS (
+                    INSERT INTO Groups (group_name, customer_id, account_id) VALUES ($1,$2,$3)
+                    RETURNING group_id
+                    ),
+                    groups_users AS (
+                    INSERT INTO GroupsUsers (group_id, user_id) VALUES ((SELECT group_id FROM new_group), $4)
+                    )
+                    SELECT group_id FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
+                    .then(result => {
+                        Qresult = result.rows[0];   
+                        response.status(200).json(Qresult);
+                       });
+        
+            })
 
-    async _CreateGroup(GroupName) {
-        let newCustomer = await CapitalOneApiManager.CreateCustomer(GroupName, " ", "420", "HAM HOUSE", "Ann Arbor", "MI", "48104");
-		let newAccount = await CapitalOneApiManager.CreateAccount(newCustomer.objectCreated._id, GroupName);
 
-        let newGroup = {
-            group_name: GroupName,
-			customer_id: newCustomer.objectCreated._id,
-			account_id: newAccount.objectCreated._id,
-			};
-
-        let result = `WITH group AS (
-            INSERT INTO Groups (group_name, customer_id, account_id) VALUES ($1, $2, $3)
-            RETURNING group_id
-        ),
-        WITH groups_users AS (
-            INSERT INTO GroupsUsers (group_id, user_id) VALUES (group_id, $4)
-            SELECT group_id FROM group
-        )
-        SELECT group_id FROM group;`
-
+        });
+      
     }
     
 
