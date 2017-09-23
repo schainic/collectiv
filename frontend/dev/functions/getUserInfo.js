@@ -18,10 +18,16 @@ function getUserInfo(callback) {
 
 		res.on('end', () => {
 			if (res.statusCode == 200) {
-				callback(JSON.parse(body));
+				var resData = JSON.parse(body);
+				if (resData.logged_in) {
+					callback(resData.user);
+				}
+				else {
+					callback(null);
+				}
 			}
 			else {
-				callback(null);
+				console.error(res.statusCode);
 			}
 		});
 
