@@ -8,6 +8,7 @@ import {
 import {Textbox} from './components/Textbox.js';
 import {Header} from './components/Header.js';
 import {LoginPage} from './containers/LoginPage.js';
+import {SignUpPage} from './containers/SignUpPage.js';
 
 class App extends React.Component {
   render () {
@@ -16,9 +17,13 @@ class App extends React.Component {
             <div>
                 <Header/>
                 <Route exact path="/" render={() =>
-                    <Link to="/login/">login</Link>
+                    <div>
+                        <Link to="/login/">login</Link><br/>
+                        <Link to="/signup/">Sign up</Link>
+                    </div>
                 } />
                 <Route exact path="/login/" component={LoginPage} />
+                <Route exact path="/signup/" component={SignUpPage} />
             </div>
         </Router>
     );
