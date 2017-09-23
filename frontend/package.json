@@ -1,0 +1,17 @@
+{
+  "name": "collectiv",
+  "version": "0.0.0",
+  "description": "MHacks X submission",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Austin Dudas",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  },
+  "repository": "https://github.com/schainic/collectiv.git"
+}
