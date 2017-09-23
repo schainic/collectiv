@@ -21,8 +21,9 @@ class _UserManager {
                 GroupsUsers JOIN Groups ON Groups.group_id = GroupsUsers.group_id 
                 WHERE GroupsUsers.user_id = $1`
                 , [User_id]).then(result => {
-             Qresult = result;   
-                
+             Qresult = result.rows;   
+                        response.status(200).json(Qresult);
+
             });
               
             }
@@ -34,7 +35,6 @@ class _UserManager {
             console.log(Qresult);
             
 
-        response.status(200).json(Qresult);
 
 
     }
