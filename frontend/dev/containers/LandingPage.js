@@ -14,7 +14,7 @@ class LandingPage extends React.Component {
 
     userInfoCallback(user) {
         if (user) {
-            this.props.history('/groups/');
+            this.props.history.push('/groups/');
         }
     }
 
