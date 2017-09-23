@@ -19,6 +19,9 @@ class _Server {
     }
 
     _initServer() {
+		// Server static files at ../../dist
+		this._server.use(express.static(path.resolve(__dirname, "../..")));
+
 		// Use cookie-parser
 		this._server.use(cookieParser());
 
@@ -43,6 +46,10 @@ class _Server {
 		this._server.post("/api/auth/signup", this._ensureNotAuthorized, AuthManager.signUp.bind(AuthManager));
 		this._server.post("/api/auth/signin", this._ensureNotAuthorized, AuthManager.signIn.bind(AuthManager));
 		this._server.post("/api/auth/signout", this._ensureAuthorized, AuthManager.signOut.bind(AuthManager));
+
+		this._server.get("*", (request, response, next) => {
+			response.sendFile(path.resolve(__dirname, "../../index.html"));
+		});
     }
 }
 
