@@ -1,8 +1,7 @@
 
 var querystring = require('querystring');
 var http = require('http');
-var fs = require('fs');
-import Config from 'config/Config.js';
+import Config from '../config/Config.js';
 
 class CapitalOneApiManager {
     constructor() {
@@ -38,7 +37,7 @@ class CapitalOneApiManager {
             path: '/customers',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(newCustomer)
             },
             parameters: {
@@ -81,7 +80,7 @@ class CapitalOneApiManager {
             path: '/customers/' + CustomerId + '/accounts' ,
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(newCustomer)
             },
             parameters: {
@@ -128,7 +127,7 @@ class CapitalOneApiManager {
             path: '/accounts/' + PayerId + '/transfers' ,
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(newCustomer)
             },
             parameters: {
@@ -148,32 +147,70 @@ class CapitalOneApiManager {
         post_req.end();
     }
 
-    function getAccount(AccountId){
-        var str = '';
+    async getAccount(AccountId){
+        let key;
 
-        var options = {
-            host: 'api.reimaginebanking.com',
-            path: '/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
-        };
-
-        callback = function(response) {
-
-            response.on('data', function (chunk) {
-                str += chunk;
-            });
-
-            response.on('end', function () {
-                console.log(str);
-            });
-
-            //return str;
+        try{
+            key = await Config.CapitalOne.ApiKey;
+        }catch(e) {
+            console.log("Failed to retreive APIKEY for Capital one!!! in getAccount() lol shit motherfucker!");
         }
 
-        var req = http.request(options, callback).end();
 
-        // These just return undefined and empty
-        console.log(req.data);
-        console.log(str);
+        let get_options = {
+            host: 'api.reimaginebanking.com',
+            path: '/accounts/' + AccountId,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            parameters: {
+                'key': key
+            }
+        };
+
+        let get_req = http.request(get_options, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {
+                console.log('Response: ' + chunk);
+            });
+        });
+
+        // post the data
+        get_req.end();
+    }
+
+    async GetCustomer(CustomerId){
+        let key;
+
+        try{
+            key = await Config.CapitalOne.ApiKey;
+        }catch(e) {
+            console.log("Failed to retreive APIKEY for Capital one!!! in getAccount() lol shit motherfucker!");
+        }
+
+
+        let get_options = {
+            host: 'api.reimaginebanking.com',
+            path: '/customers/' + CustomerId,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            parameters: {
+                'key': key
+            }
+        };
+
+        let get_req = http.request(get_options, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {
+                console.log('Response: ' + chunk);
+            });
+        });
+
+        // post the data
+        get_req.end();
     }
 
 
