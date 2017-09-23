@@ -1,17 +1,23 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^1.0.3",
-    "express": "^4.15.4",
-    "passport": "^0.4.0",
-    "pg": "^7.3.0"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "babel ./src --out-dir ./lib --presets=es2015,stage-2 --plugins transform-object-rest-spread,transform-async-to-generator --ignore node_modules",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^1.0.3",
+        "express": "^4.15.4",
+        "passport": "^0.4.0",
+        "pg": "^7.3.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0"
+    }
 }
