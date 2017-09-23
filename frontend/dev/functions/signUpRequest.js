@@ -1,15 +1,14 @@
 // var fs = require('fs');
 // var request = require('request');
 const http = require('http');
-const queryString = require('querystring');
 
 function sendSignUpRequest(name, email, password) {
 
-	var postData = queryString.stringify({
+	var postData = {
 		"name": name,
 		"email": email,
-		"pass": password
-	});
+		"password": password
+	};
 
 	const options = {
 		method: 'POST',
@@ -37,27 +36,8 @@ function sendSignUpRequest(name, email, password) {
 
 	});
 
-	req.write(postData);
+	req.write(JSON.stringify(postData));
 	req.end();
-
-	// request({
-	// 	url: '/api/auth/signup',
-	// 	json: true,
-	// 	body: JSONLoginInfo,
-	// 	method: "POST"
-	// }, function(error, response, body) {
-	// 	console.log(response);
-	// });
-
-	// request.post({ url: '/api/auth/signup/', formData: JSONLoginInfo }, (err, response, body) => {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	}
-	// 	else {
-	// 		console.log(response);
-	// 		console.log(body);
-	// 	}
-	// });
 
 }
 
