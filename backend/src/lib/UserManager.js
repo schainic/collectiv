@@ -17,13 +17,13 @@ class _UserManager {
         let Qresult = {};
 
             try {
-                Database.query(`SELECT * FROM
+                Database.query(`SELECT Groups.group_id, Groups.group_name FROM
                 GroupsUsers JOIN Groups ON Groups.group_id = GroupsUsers.group_id 
                 WHERE GroupsUsers.user_id = $1`
                 , [User_id]).then(result => {
              Qresult = result.rows;   
-                        response.status(200).json(Qresult);
-
+             response.status(200).json(Qresult);
+             
             });
               
             }

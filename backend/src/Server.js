@@ -8,6 +8,7 @@ const passport = require("passport");
 import Config from "./config/Config.js";
 import AuthManager from "./lib/AuthManager.js";
 import UserManager from "./lib/UserManager.js";
+import GroupManager from "./lib/GroupManager.js";
 
 class _Server {
     constructor() {
@@ -52,6 +53,12 @@ class _Server {
 		// this._server.post("/api/auth/signout", AuthManager.signOut.bind(AuthManager));
 
 		this._server.get("/api/groups", UserManager.GetUsersGroups.bind(UserManager));
+		this._server.post("/api/groups/add", GroupManager.CreateGroup.bind(GroupManager));
+
+		//give this request id=<GroupID>
+		this._server.get("/api/group", GroupManager.GetGroupAndCollections.bind(GroupManager));		
+
+
 
 		this._server.get("/api/*", (request, response, next) => { response.end(); });
 
