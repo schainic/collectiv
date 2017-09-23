@@ -84,47 +84,42 @@ class _CapitalOneApiManager {
         });
     }
 
-    async CreateTransfer(PayerId, PayeeId, amount, Description)
+    CreateTransfer(PayerId, PayeeId, amount, Description)
     {
-        let today = new Date();
+        return new Promise((resolve, reject) => {
+            let today = new Date();
 
-
-        let newTransfer = {
-            "medium": "balance",
-            "payee_id": PayeeId,
-            "amount": amount,
-            "transaction_date": today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
-            "description": Description
-        }
-
-        let key;
-
-        try{
-            key = await Config.CapitalOne.ApiKey;
-        }catch(e) {
-            console.log("Failed to retreive APIKEY for Capital one!!! in CreateTransfer() lol shit motherfucker!");
-        }
-
-
-        let post_options = {
-            host: 'api.reimaginebanking.com',
-            path: '/accounts/' + PayerId + '/transfers' + "?key=" + key,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+            let newTransfer = {
+                "medium": "balance",
+                "payee_id": PayeeId,
+                "amount": amount,
+                "transaction_date": today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+                "description": Description
             }
-        };
 
-        let post_req = http.request(post_options, function(res) {
-            res.setEncoding('utf8');
-            res.on('data', function (chunk) {
-                console.log('Response: ' + chunk);
+            let key = Config.capitalOne.ApiKey;
+
+            let post_options = {
+                host: 'api.reimaginebanking.com',
+                path: '/accounts/' + PayerId + '/transfers' + "?key=" + key,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+
+            let post_req = http.request(post_options, function(res) {
+                res.setEncoding('utf8');
+                res.on('data', function (chunk) {
+                    // console.log('Response: ' + chunk);
+                    resolve(JSON.parse(chunk));
+                });
             });
-        });
 
-        // post the data
-        post_req.write(JSON.stringify(newTransfer));
-        post_req.end();
+            // post the data
+            post_req.write(JSON.stringify(newTransfer));
+            post_req.end();
+        });
     }
 
     async GetAccount(AccountId){

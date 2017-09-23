@@ -33,13 +33,11 @@ class _GroupManager {
                 
                 Database.query(
                     `SELECT fnds.fund_id, fnds.fund_name, fnds.balance
-                    FROM GroupsUsers gpusr
-                    LEFT OUTER JOIN Funds fnds ON fnds.group_id = gpusr.group_id
-                    WHERE gpusr.group_id = $1;`
+                    FROM Funds fnds
+                    WHERE fnds.group_id = $1;`
                     , [request.query.id])
                     .then(Fresult => {
                        let Fundresult = Fresult.rows;
-
 
                         let totality = {
                             users: Userresult,
