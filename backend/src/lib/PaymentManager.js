@@ -16,7 +16,7 @@ class _PaymentManager {
         
 
         let newTransfer = await CapitalOneApiManager.CreateTransfer(group.account_id ,user.UserAccountNumber, Amount, "PAID TO " + user.name);
-        Database.query("")
+        Database.query("SELECT ")
 
     }
 }
