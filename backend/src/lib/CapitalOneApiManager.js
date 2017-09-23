@@ -34,7 +34,7 @@ class _CapitalOneApiManager {
 
         let post_options = {
             host: 'api.reimaginebanking.com',
-            path: '/customers' + "?key=" + "7351bc52d9de611ae79dc1bc9cbafbaf",
+            path: '/customers' + "?key=" + key,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
