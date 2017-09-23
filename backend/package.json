@@ -4,9 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "rm -r build && npm run babel-build && npm run cp-config",
+		"dev": "babel-node --presets es2015,stage-2 --plugins transform-object-rest-spread,transform-async-to-generator",
+        "build": "rm -r build && npm run babel-build && npm run cp-misc",
         "babel-build": "babel ./src --out-dir ./build --presets=es2015,stage-2 --plugins transform-object-rest-spread,transform-async-to-generator --ignore node_modules",
-        "cp-config": "cp ./src/config/Config.json ./build/config/Config.json",
+        "cp-misc": "cp ./src/config/Config.json ./build/config/Config.json && cp ./package.json ./build/package.json",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
