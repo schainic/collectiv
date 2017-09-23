@@ -70,21 +70,23 @@ class _AuthManager {
 			}
 		});
 	}
-	
+
 	async _createUser(json) {
-		
-		let newCustomer = CapitalOneApiManager.CreateCustomer(json.name, " ", "N/A", "N/A", "N/A", "N/A", "N/A");
-		let newAccount = CapitalOneApiManager.CreateAccount(newCustomer._id);
-	
+		let newCustomer = await CapitalOneApiManager.CreateCustomer(json.name, " ", "427", "Hamilton Pl", "Ann Arbor", "MI", "48104");
+		let newAccount = await CapitalOneApiManager.CreateAccount(newCustomer.objectCreated._id, json.name);
+
+        console.log(newCustomer);
+        console.log(newAccount);
+
 		let newUser = {
-			name: json.name,			
+			name: json.name,
 			email: json.email,
 			password: bcrypt.hashSync(json.password, bcrypt.genSaltSync()),
-			customer_id: newCustomer._id,
-			account_id: newAccount._id,
+			customer_id: newCustomer.objectCreated._id,
+			account_id: newAccount.objectCreated._id,
 			};
-			
-		let result = await Database.query("INSERT INTO users (name, email, password, customer_id, account_id) VALUES ($1, $2, $3, $4, $5);", 
+
+		let result = await Database.query("INSERT INTO users (name, email, password, customer_id, account_id) VALUES ($1, $2, $3, $4, $5);",
 		[newUser.name, newUser.email, newUser.password, newUser.customer_id, newUser.account_id]);
 	};
 
