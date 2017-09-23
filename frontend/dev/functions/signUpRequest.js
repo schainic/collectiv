@@ -26,6 +26,7 @@ function sendSignUpRequest(name, email, password) {
 		});
 
 		res.on('end', () => {
+			console.log(res.headers);
 			console.log(body);
 			// do stuff here
 		});

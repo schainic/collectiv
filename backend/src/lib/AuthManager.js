@@ -72,11 +72,8 @@ class _AuthManager {
 	}
 
 	async _createUser(json) {
-		let newCustomer = await CapitalOneApiManager.CreateCustomer(json.name, " ", "427", "Hamilton Pl", "Ann Arbor", "MI", "48104");
+		let newCustomer = await CapitalOneApiManager.CreateCustomer(json.name, " ", "420", "HAM HOUSE", "Ann Arbor", "MI", "48104");
 		let newAccount = await CapitalOneApiManager.CreateAccount(newCustomer.objectCreated._id, json.name);
-
-        console.log(newCustomer);
-        console.log(newAccount);
 
 		let newUser = {
 			name: json.name,
