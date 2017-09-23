@@ -6,17 +6,19 @@ import {
     Link
 } from 'react-router-dom';
 import {Textbox} from './components/Textbox.js';
+import {Header} from './components/Header.js';
+import {LoginPage} from './containers/LoginPage.js';
 
 class App extends React.Component {
   render () {
     return (
         <Router>
             <div>
-                <h1>Test again</h1>
+                <Header/>
                 <Route exact path="/" render={() =>
                     <Link to="/background/">Background</Link>
                 } />
-                <Route path="/background/" component={Textbox} />
+                <Route exact path="/login/" component={LoginPage} />
             </div>
         </Router>
     );
