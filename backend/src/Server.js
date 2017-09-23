@@ -59,6 +59,7 @@ class _Server {
 		//give this request id=<GroupID>
 		this._server.get("/api/group", GroupManager.GetGroupAndCollections.bind(GroupManager));
 
+		this._server.post("/api/fund/add", FundManager.addFund.bind(FundManager));
         this._server.post("/api/fund/transfer", FundManager.transferToFund.bind(FundManager));
 
 		this._server.get("/api/*", (request, response, next) => { response.end(); });
