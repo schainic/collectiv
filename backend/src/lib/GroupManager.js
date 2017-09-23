@@ -21,8 +21,6 @@ class _GroupManager {
         return Database.query("SELECT * FROM Funds WHERE group_id = $1", [Group_id]);
     }
 
-
-
 }
 
 
