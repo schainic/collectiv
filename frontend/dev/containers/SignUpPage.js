@@ -23,6 +23,16 @@ class SignUpPage extends React.Component {
         e.preventDefault();
         console.log(this.state.name, this.state.email, this.state.pass, this.state.confirmPass);
         // Dispatch action?
+		
+		if (this.state.name.length == 0 || this.state.pass.length == 0 || this.state.email.length == 0 ||
+			this.state.confirmPass.length == 0) {
+			alert("Please fill out all fields");
+		}
+		if (this.state.pass != this.state.confirmPass) {
+			alert("Password and confirm password do not match");
+		}
+		
+		//todo submit request
     }
 
     render() {
