@@ -81,3 +81,19 @@ button, input[type="submit"], .btn {
     outline: none; }
   button:hover, input[type="submit"]:hover, .btn:hover {
     background: #52bf57; }
+
+div.groups-wrapper {
+  height: calc(100vh - $header-size);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+  div.groups-wrapper .group-names {
+    width: 350px;
+    min-height: inherit;
+    background: #E0E0E0;
+    border-right: 1px solid #616161; }
+  div.groups-wrapper .group-details {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    min-height: inherit; }
