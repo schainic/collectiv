@@ -5,7 +5,9 @@ var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'dev');
 
 var config = {
-  entry: APP_DIR + '/index.js',
+  entry: {
+      app: APP_DIR + '/index.js'
+  },
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
@@ -16,7 +18,7 @@ var config = {
         test : /\.js?/,
         include : APP_DIR,
         loader : 'babel-loader'
-      }
+    }
     ]
   }
 };

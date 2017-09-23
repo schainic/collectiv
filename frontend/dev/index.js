@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
         <Router>
             <div>
-                <h1>Test</h1>
+                <h1>Test again</h1>
                 <Route exact path="/" render={() =>
                     <Link to="/background/">Background</Link>
                 } />
