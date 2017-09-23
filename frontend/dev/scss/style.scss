@@ -122,5 +122,13 @@ div.groups-wrapper {
     .group-details {
         flex-grow: 1;
         height: inherit;
+        position: relative;
+        .group-details-content {
+            display: flex;
+            div {
+                padding: 8px;
+                width: calc(50% - 16px);
+            }
+        }
     }
 }

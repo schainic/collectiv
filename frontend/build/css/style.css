@@ -126,4 +126,12 @@ div.groups-wrapper {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
-    height: inherit; }
+    height: inherit;
+    position: relative; }
+    div.groups-wrapper .group-details .group-details-content {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      div.groups-wrapper .group-details .group-details-content div {
+        padding: 8px;
+        width: calc(50% - 16px); }
