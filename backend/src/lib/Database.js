@@ -1,4 +1,6 @@
 const pg = require("pg");
+const fs = require("fs");
+const path = require("path");
 
 import Config from "../config/Config.js"
 
@@ -30,6 +32,11 @@ const _pgConfig = {
     password: Config.postgres.password,
     host: Config.postgres.host,
     port: Config.postgres.port,
+    ssl: {
+        rejectUnauthorized: false,
+        key: fs.readFileSync(path.join(__dirname, "../config/", Config.postgres.ssl.key)).toString(),
+        cert: fs.readFileSync(path.join(__dirname, "../config/", Config.postgres.ssl.cert)).toString()
+    },
     max: 10,
     idleTimeoutMillis: 3000
 }
@@ -63,8 +70,8 @@ const _GROUPS_USERS_CREAATE = `
             user_id INTEGER NOT NULL,
             group_id INTEGER NOT NULL,
             PRIMARY KEY (user_id, group_id),
-			CONSTRAINT user FOREIGN KEY (user_id) REFERENCES users (user_id) MATCH SIMPLE ON DELETE CASCADE,
-			CONSTRAINT group FOREIGN KEY (group_id) REFERENCES items (group_id) MATCH SIMPLE ON DELETE CASCADE
+			FOREIGN KEY (user_id) REFERENCES Users (user_id) MATCH SIMPLE ON DELETE CASCADE,
+			FOREIGN KEY (group_id) REFERENCES Groups (group_id) MATCH SIMPLE ON DELETE CASCADE
         );
 `;
 
@@ -76,8 +83,8 @@ const _FUNDS_CREATE = `
             group_id INTEGER NOT NULL,
             balance FLOAT,
             PRIMARY KEY (fund_id),
-			CONSTRAINT user FOREIGN KEY (master_user_id) REFERENCES users (user_id) MATCH SIMPLE ON DELETE SET NULL,
-			CONSTRAINT group FOREIGN KEY (group_id) REFERENCES items (group_id) MATCH SIMPLE ON DELETE SET NULL
+			FOREIGN KEY (master_user_id) REFERENCES Users (user_id) MATCH SIMPLE ON DELETE SET NULL,
+			FOREIGN KEY (group_id) REFERENCES Groups (group_id) MATCH SIMPLE ON DELETE SET NULL
         );
 `;
 
