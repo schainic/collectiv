@@ -47,10 +47,10 @@ class _AuthManager {
 
     me(request, response, next) {
         if (request.user) {
-            response.status(200).json(request.user);
+            response.status(200).json({ logged_in: true, user: request.user });
         }
         else {
-            response.status(401).json({ message: "Not logged in" });
+            response.status(200).json({ logged_in: false, user: null });
         }
     }
 
