@@ -9,7 +9,7 @@ class _FundManager {
     }
 
     transferToFund(request, response) {
-        let user_id = request.body.user_id;
+        let user_id = request.user.user_id;
         let group_id = request.body.group_id;
         let fund_id = request.body.fund_id;
         let amount = request.body.amount;
