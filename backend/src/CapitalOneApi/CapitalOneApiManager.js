@@ -10,7 +10,7 @@ class CapitalOneApiManager {
     }
 
 
-    CreateCustomer(FirstName, LastName, StreeNumber, StreetName, City, State, Zip)
+    async CreateCustomer(FirstName, LastName, StreeNumber, StreetName, City, State, Zip)
     {
         let newCustomer = querystring.stringify({
             "first_name": FirstName,
@@ -58,7 +58,7 @@ class CapitalOneApiManager {
         post_req.end();
     }
 
-    CreateAccount(CustomerId, NickName)
+    async CreateAccount(CustomerId, NickName)
     {
         let newAccount = {
             "type": "Savings",
@@ -101,7 +101,7 @@ class CapitalOneApiManager {
         post_req.end();
     }
 
-    CreateTransfer(PayerId, PayeeId, amount, Description)
+    async CreateTransfer(PayerId, PayeeId, amount, Description)
     {
         let today = new Date();
 
