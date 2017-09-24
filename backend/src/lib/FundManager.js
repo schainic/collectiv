@@ -24,13 +24,17 @@ class _FundManager {
         let fund_id = request.body.fund_id;
         let amount = request.body.amount;
 
+        console.log(request.body);
+
         UserManager.GetUserInfo(user_id).then(user => {
             GroupManager.GetGroupInfo(group_id).then(group => {
                 this.getFundInfo(fund_id).then(fund => {
                     PaymentManager.payToFund(group, fund, user, amount);
 
-                    FundManager.updateFundAmount(fund_id, amount).then(result => {
-                        response.status(200).message({ message: "Fund transfered" });
+                    this.updateFundAmount(fund_id, amount).then(result => {
+                        this.getFundInfo(fund_id).then(fund => {
+                            response.status(200).message(fund);
+                        });
                     });
                 });
             });
@@ -43,7 +47,7 @@ class _FundManager {
     }
 
     updateFundAmount(fund_id, difference) {
-        return Database.query("WITH update_fund AS (UPDATE Funds SET balance = balance + $1 WHERE fund_id = $2) SELECT fund_id, fund_name, balance WHERE fund_id = $2", [difference, fund_id]);
+        return Database.query("UPDATE Funds SET balance = balance + $1 WHERE fund_id = $2", [difference, fund_id]);
     }
 }
 
