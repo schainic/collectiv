@@ -1,9 +1,11 @@
 import React from 'react';
 import { AddGroupMember } from './AddGroupMember.js';
 import { addUserToGroup } from '../functions/addUserToGroup.js';
+import { addMoneyToFund } from '../functions/addMoneyToFund.js';
 
 import { AddFund } from './AddFund.js';
 import { addFund } from '../functions/addFund.js';
+import { DepositFund } from './DepositFund.js';
 
 class GroupDetails extends React.Component {
     constructor(props) {
@@ -12,6 +14,8 @@ class GroupDetails extends React.Component {
         this.addFund = addFund.bind(this);
         this.addMemberSubmit = this.addMemberSubmit.bind(this);
         this.addMemberCallback = this.addMemberCallback.bind(this);
+        this.depositClick = this.depositClick.bind(this);
+        this.depositCallback = this.depositCallback.bind(this);
 
         this.state = {
             users: (props.group) ? props.group.users : null,
@@ -41,7 +45,38 @@ class GroupDetails extends React.Component {
         }
     }
 
+    depositClick(fid) {
+        return (e) => {
+            e.preventDefault();
+            var amount = parseInt(prompt('How much money would you like to add to this fund? Please enter an amount in USD.', 0));
+            if (!isNaN(amount)) {
+                var group_id = this.props.group.group_id;
+                addMoneyToFund(group_id, fid, amount, this.depositCallback);
+            }
+            else {
+                alert('Invalid input.');
+            }
+        }
+    }
+
+    depositCallback(res, fund) {
+        if (res.statusCode == 200) {
+            var newFunds = this.state.funds.slice();
+            for (var i = 0; i < newFunds.length; ++i) {
+                if (newFunds[i].fund_id == fund.fund_id) {
+                    newFunds[i] = fund;
+                    break;
+                }
+            }
+            this.setState({funds: newFunds});
+        }
+        else {
+            console.error('Error in depositCallback: ' + res.statusCode);
+        }
+    }
+
     render() {
+        var that = this;
         if (this.props.group) {
             return (
                 <div className="group-details-content">
@@ -63,6 +98,7 @@ class GroupDetails extends React.Component {
                                 <div className="fund-thumb" key={f.fund_id}>
                                     <strong>{f.fund_name + ': '}</strong>
                                     ${f.balance}
+                                    <DepositFund clickHandler={that.depositClick(f.fund_id)}/>
                                 </div>
                             );
                         })}

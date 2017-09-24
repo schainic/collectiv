@@ -39,7 +39,7 @@ class AddFund extends React.Component {
         }
         else if (this.state.mode == 'form') {
             return (
-                <form onSubmit={this.handleSubmit} className="add-group-form">
+                <form onSubmit={this.handleSubmit} className="add-form">
                     <label htmlFor="group-name">Fund name</label>
                     <input type="text" name="group-name" onChange={this.handleChange} value={this.state.name}/>
                     <input type="submit"/>

@@ -3,8 +3,8 @@ const http = require('http');
 function addMoneyToFund(groupid, fundid, amount, callback) {
 
 	var postData = {
-		
-		"group_id": groupid
+
+		"group_id": groupid,
 		"fund_id": name,
 		"amount": amount
 	};
