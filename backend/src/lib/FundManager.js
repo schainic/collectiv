@@ -24,8 +24,6 @@ class _FundManager {
         let fund_id = request.body.fund_id;
         let amount = request.body.amount;
 
-        console.log(request.body);
-
         UserManager.GetUserInfo(user_id).then(user => {
             GroupManager.GetGroupInfo(group_id).then(group => {
                 this.getFundInfo(fund_id).then(fund => {
