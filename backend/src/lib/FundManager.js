@@ -43,7 +43,7 @@ class _FundManager {
     }
 
     updateFundAmount(fund_id, difference) {
-        return Database.query("UPDATE Funds SET amount = amount + $1 WHERE fund_id = $2", [difference, fund_id]);
+        return Database.query("WITH update_fund AS (UPDATE Funds SET balance = balance + $1 WHERE fund_id = $2) SELECT fund_id, fund_name, balance WHERE fund_id = $2", [difference, fund_id]);
     }
 }
 
