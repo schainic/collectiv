@@ -83,7 +83,7 @@ class GroupDetails extends React.Component {
     addFundCallback(res, fund) {
         if (res.statusCode == 200) {
             var newFunds = this.state.funds.slice();
-            newFunds.push(JSON.parse(fund));
+            newFunds.push(fund);
             this.setState({funds: newFunds});
         }
         else {

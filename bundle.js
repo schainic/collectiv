@@ -35725,7 +35725,7 @@ var GroupDetails = function (_React$Component) {
         value: function addFundCallback(res, fund) {
             if (res.statusCode == 200) {
                 var newFunds = this.state.funds.slice();
-                newFunds.push(JSON.parse(fund));
+                newFunds.push(fund);
                 this.setState({ funds: newFunds });
             } else {
                 console.error('Bad result: ' + res.statusCode);
