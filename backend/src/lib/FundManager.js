@@ -31,7 +31,7 @@ class _FundManager {
 
                     this.updateFundAmount(fund_id, amount).then(result => {
                         this.getFundInfo(fund_id).then(fund => {
-                            response.status(200).json(fund);
+                            response.status(200).json(fund.rows[0]);
                         });
                     });
                 });
