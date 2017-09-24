@@ -55,7 +55,8 @@ class _Server {
 
 		this._server.get("/api/groups", UserManager.GetUsersGroups.bind(UserManager));
 		this._server.post("/api/groups/add", GroupManager.CreateGroup.bind(GroupManager));
-
+		this._server.post("/api/groups/invite", GroupManager.AddUserToGroup.bind(GroupManager));
+		
 		//give this request id=<GroupID>
 		this._server.get("/api/group", GroupManager.GetGroupAndCollections.bind(GroupManager));
 
