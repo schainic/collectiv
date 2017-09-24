@@ -1,5 +1,5 @@
 import Database from "./Database.js";
-import CapitalOneApiManager from './CapitalOneApiManager.js';
+import CapitalOneApiManager from "./CapitalOneApiManager.js";
 
 class _GroupManager {
 
@@ -14,7 +14,7 @@ class _GroupManager {
             WHERE Users.email = $1;`
             , [request.body.email]).then( result => {
                 let newGroupsUsers = {
-                    user_id: result.rows[0],
+                    user_id: result.rows[0],                    
                     group_id: request.body.group_id
                     };
 
@@ -22,13 +22,15 @@ class _GroupManager {
                     {
                         Database.query("INSERT INTO GroupsUsers (user_id, group_id) VALUES ($1, $2);",
                         [newGroupsUsers.group_id, newGroupsUsers.user_id]).then(GUresult => {
-
+                         
                             response.status(200);
+                            respose.end();                            
                         });
                     }
                     else
                     {
-                        response.status(500);
+                        response.status(500);    
+                        respose.end();                        
                     }
 
             });
@@ -39,7 +41,7 @@ class _GroupManager {
     }
 
     GetUsersInGroup(Group_id) {
-        return Database.query(`SELECT usr.user_id, usr.name, usr.email, usr.customer_id
+        return Database.query(`SELECT usr.user_id, usr.name, usr.email, usr.customer_id 
             FROM GroupUsers gpusr JOIN ON Users usr WHERE usr.user_id = gpusr.user_id
             WHERE group_id = $1`, [Group_id]);
     }
@@ -47,7 +49,7 @@ class _GroupManager {
     GetFundsInGroup(Group_id) {
         return Database.query("SELECT * FROM Funds WHERE group_id = $1", [Group_id]);
     }
-
+    
     GetGroupAndCollections(request, response) {
         Database.query(
             `SELECT usr.user_id, usr.name, usr.email, usr.customer_id
@@ -57,7 +59,7 @@ class _GroupManager {
             , [request.query.id])
             .then(Uresult => {
                 let Userresult = Uresult.rows;
-
+                
                 Database.query(
                     `SELECT fnds.fund_id, fnds.fund_name, fnds.balance
                     FROM Funds fnds
@@ -72,12 +74,13 @@ class _GroupManager {
                         }
 
                        response.status(200).json(totality);
+                       respose.end();                       
                     });
 
 
 
                });
-    }
+    }        
 
 
      CreateGroup(request, response) {
@@ -90,7 +93,7 @@ class _GroupManager {
                     customer_id: newCustomer.objectCreated._id,
                     account_id: newAccount.objectCreated._id,
                     };
-
+        
                 Database.query(`WITH new_group AS (
                     INSERT INTO Groups (group_name, customer_id, account_id) VALUES ($1,$2,$3)
                     RETURNING group_id, group_name
@@ -100,19 +103,20 @@ class _GroupManager {
                     )
                     SELECT group_id, group_name FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
                     .then(result => {
-                        Qresult = result.rows[0];
-                        response.status(200).json(Qresult);
+                        Qresult = result.rows[0];   
+                        response.status(200).json(result);
+                        respose.end();
                        });
-
+        
             })
 
 
         });
 
-
-
+        
+      
     }
-
+    
 
 
 
