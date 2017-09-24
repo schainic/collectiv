@@ -51,7 +51,7 @@ class GroupDetails extends React.Component {
             var amount = parseInt(prompt('How much money would you like to add to this fund? Please enter an amount in USD.', 0));
             if (!isNaN(amount)) {
                 var group_id = this.props.group.group_id;
-                addMoneyToFund(parseInt(group_id), fid, amount, this.depositCallback);
+                addMoneyToFund(parseInt(group_id), parseInt(fid), amount, this.depositCallback);
             }
             else {
                 alert('Invalid input.');
