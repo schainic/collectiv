@@ -23,12 +23,14 @@ class _GroupManager {
                         Database.query("INSERT INTO GroupsUsers (user_id, group_id) VALUES ($1, $2);",
                         [newGroupsUsers.group_id, newGroupsUsers.user_id]).then(GUresult => {
                          
-                            response.status(200);                        
+                            response.status(200);
+                            respose.end();                            
                         });
                     }
                     else
                     {
-                        response.status(500);                                                
+                        response.status(500);    
+                        respose.end();                        
                     }
 
             });
@@ -72,6 +74,7 @@ class _GroupManager {
                         }
 
                        response.status(200).json(totality);
+                       respose.end();                       
                     });
 
 
@@ -101,7 +104,8 @@ class _GroupManager {
                     SELECT group_id, group_name FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
                     .then(result => {
                         Qresult = result.rows[0];   
-                        response.status(200).json(Qresult);
+                        response.status(200).json(result);
+                        respose.end();
                        });
         
             })
