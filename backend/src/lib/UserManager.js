@@ -18,32 +18,23 @@ class _UserManager {
 
             try {
                 Database.query(`SELECT Groups.group_id, Groups.group_name FROM
-                GroupsUsers JOIN Groups ON Groups.group_id = GroupsUsers.group_id 
+                GroupsUsers JOIN Groups ON Groups.group_id = GroupsUsers.group_id
                 WHERE GroupsUsers.user_id = $1`
                 , [User_id]).then(result => {
-             Qresult = result.rows;   
-             response.status(200).json(Qresult);
-             response.end();
-             
-            });
-              
+                    Qresult = result.rows;
+                    response.status(200).json(Qresult);
+                    response.end();
+
+                });
+
             }
             catch(e){
                 console.log(Qresult);
-                
+
                 response.status(500).json({"Error":"Can't retrieve user's groups"});
-                response.end();                
+                response.end();
             }
-            console.log(Qresult);
-            
-
-
-
     }
-
-    
-
-
 }
 
 
