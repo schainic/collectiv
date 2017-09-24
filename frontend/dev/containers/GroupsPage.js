@@ -2,9 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import {GroupThumb} from '../components/GroupThumb.js';
 import {GroupDetails} from '../components/GroupDetails.js';
+import { AddGroup } from '../components/AddGroup.js';
 import { getUserInfo } from '../functions/getUserInfo.js';
 import { getGroupNames } from '../functions/getGroupNames.js';
 import { getGroupObject } from '../functions/getGroupObject.js';
+import { addGroupRequest } from '../functions/addGroupRequest.js';
 
 
 class GroupsPage extends React.Component {
@@ -50,6 +52,19 @@ class GroupsPage extends React.Component {
         }
     }
 
+    addGroupSubmit(name) {
+        addGroupRequest(name, this.addGroupCallback);
+    }
+
+    addGroupCallback(res, group) {
+        if (res.statusCode == 200) {
+            this.loadGroupDescription(group);
+        }
+        else {
+            console.error('Bad result: ' + res.statusCode);
+        }
+    }
+
     render() {
         var that = this;
         var groupNamesContent = (<p>Test</p>);
@@ -59,7 +74,7 @@ class GroupsPage extends React.Component {
                     <div className="section-header">
                         Your groups
                     </div>
-                    <p>No groups!</p>
+                    <AddGroup handleSubmit={this.addGroupSubmit}/>
                 </div>
             );
         }
@@ -74,6 +89,7 @@ class GroupsPage extends React.Component {
                             <GroupThumb name={g.group_name} key={g.group_id} handleClick={that.groupThumbClick(g.group_id)} />
                         );
                     })}
+                    <AddGroup handleSubmit={this.addGroupSubmit}/>
                 </div>
             )
         }

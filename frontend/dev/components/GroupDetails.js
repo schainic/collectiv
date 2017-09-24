@@ -29,7 +29,7 @@ class GroupDetails extends React.Component {
                             return (
                                 <div className="fund-thumb" key={f.fund_id}>
                                     <strong>{f.fund_name + ': '}</strong>
-                                    {f.balance}
+                                    ${f.balance}
                                 </div>
                             );
                         })}
