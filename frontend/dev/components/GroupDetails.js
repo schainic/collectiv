@@ -48,7 +48,13 @@ class GroupDetails extends React.Component {
     depositClick(fid) {
         return (e) => {
             e.preventDefault();
-            var amount = parseInt(prompt('How much money would you like to add to this fund? Please enter an amount in USD.', 0));
+            var amount = prompt('How much money would you like to add to this fund? Please enter an amount in USD.', 0);
+            if (amount === null) {
+                return;
+            }
+            else {
+                amount = parseFloat(amount);
+            }
             if (!isNaN(amount)) {
                 var group_id = this.props.group.group_id;
                 addMoneyToFund(parseInt(group_id), parseInt(fid), amount, this.depositCallback);
@@ -68,7 +74,6 @@ class GroupDetails extends React.Component {
                     break;
                 }
             }
-            console.log(fund);
             this.setState({funds: newFunds});
         }
         else {
