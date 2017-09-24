@@ -10,7 +10,7 @@ class _GroupManager {
     AddUserToGroup(request, response) {
 
         Database.query(
-            `SELECT user_id, name
+            `SELECT Users.user_id, Users.name
             WHERE Users.email = $1;`
             , [request.body.email]).then( result => {
                 let newGroupsUsers = {
