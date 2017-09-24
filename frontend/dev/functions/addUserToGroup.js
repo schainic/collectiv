@@ -3,7 +3,7 @@ const http = require('http');
 function addUserToGroup(groupid, email, callback) {
 
 	var postData = {
-		
+
 		"group_id": groupid,
 		"email": email
 	};
@@ -24,6 +24,7 @@ function addUserToGroup(groupid, email, callback) {
 		});
 
 		res.on('end', () => {
+			console.log('Add user to group end');
 			var bodyJSON = JSON.parse(body);
 			callback(res, bodyJSON);
 		});

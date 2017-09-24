@@ -17,7 +17,7 @@ class AddGroupMember extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({name: e.target.value});
+        this.setState({email: e.target.value});
     }
 
     handleSubmit(e) {
