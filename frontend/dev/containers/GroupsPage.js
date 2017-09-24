@@ -21,6 +21,8 @@ class GroupsPage extends React.Component {
         this.groupNamesCallback = this.groupNamesCallback.bind(this);
         this.userInfoCallback = this.userInfoCallback.bind(this);
         this.loadGroupDescription = this.loadGroupDescription.bind(this);
+        this.addGroupCallback = this.addGroupCallback.bind(this);
+        this.addGroupSubmit = this.addGroupSubmit.bind(this);
 
         getUserInfo(this.userInfoCallback);
     }
@@ -56,8 +58,9 @@ class GroupsPage extends React.Component {
     }
 
     addGroupCallback(res, group) {
+        console.log(group);
         if (res.statusCode == 200) {
-            this.loadGroupDescription(group);
+            getGroupObject(group.group_id, loadGroupDescription);
         }
         else {
             console.error('Bad result: ' + res.statusCode);
