@@ -24,7 +24,6 @@ function addUserToGroup(groupid, email, callback) {
 		});
 
 		res.on('end', () => {
-			console.log('Add user to group end');
 			var bodyJSON = JSON.parse(body);
 			callback(res, bodyJSON);
 		});
