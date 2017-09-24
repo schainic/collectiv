@@ -70,7 +70,8 @@ class _GroupManager {
 
                         let totality = {
                             users: Userresult,
-                            funds: Fundresult
+                            funds: Fundresult,
+                            group_id: request.query.id
                         }
 
                        response.status(200).json(totality);

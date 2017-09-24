@@ -13,8 +13,8 @@ class _FundManager {
 		let group_id = request.body.group_id;
 		let fund_name = request.body.fund_name;
 
-		Database.query("INSERT INTO Funds(fund_name, master_user_id, group_id) VALUES($1, $2, $3)", [fund_name, user_id, group_id]).then(result => {
-			response.status(200).json({ message: "ok" });
+		Database.query("WITH new_fund AS (INSERT INTO Funds(fund_name, master_user_id, group_id) VALUES($1, $2, $3) RETURNING *) SELECT fund_id, fund_name, balance FROM new_fund", [fund_name, user_id, group_id]).then(result => {
+			response.status(200).json({ ...result.rows[0] });
 		});
 	}
 
