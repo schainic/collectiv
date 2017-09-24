@@ -1457,7 +1457,7 @@ var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(5);
 
 var CallbackQueue = __webpack_require__(83);
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 var ReactFeatureFlags = __webpack_require__(84);
 var ReactReconciler = __webpack_require__(25);
 var Transaction = __webpack_require__(40);
@@ -1739,7 +1739,7 @@ module.exports = g;
 
 var _assign = __webpack_require__(5);
 
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 
 var emptyFunction = __webpack_require__(10);
 var warning = __webpack_require__(2);
@@ -2211,6 +2211,91 @@ module.exports = DOMProperty;
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(254)
+var extend = __webpack_require__(265)
+var statusCodes = __webpack_require__(266)
+var url = __webpack_require__(267)
+
+var http = exports
+
+http.request = function (opts, cb) {
+	if (typeof opts === 'string')
+		opts = url.parse(opts)
+	else
+		opts = extend(opts)
+
+	// Normally, the page is loaded from http or https, so not specifying a protocol
+	// will result in a (valid) protocol-relative url. However, this won't work if
+	// the protocol is something else, like 'file:'
+	var defaultProtocol = global.location.protocol.search(/^https?:$/) === -1 ? 'http:' : ''
+
+	var protocol = opts.protocol || defaultProtocol
+	var host = opts.hostname || opts.host
+	var port = opts.port
+	var path = opts.path || '/'
+
+	// Necessary for IPv6 addresses
+	if (host && host.indexOf(':') !== -1)
+		host = '[' + host + ']'
+
+	// This may be a relative url. The browser should always be able to interpret it correctly.
+	opts.url = (host ? (protocol + '//' + host) : '') + (port ? ':' + port : '') + path
+	opts.method = (opts.method || 'GET').toUpperCase()
+	opts.headers = opts.headers || {}
+
+	// Also valid opts.auth, opts.mode
+
+	var req = new ClientRequest(opts)
+	if (cb)
+		req.on('response', cb)
+	return req
+}
+
+http.get = function get (opts, cb) {
+	var req = http.request(opts, cb)
+	req.end()
+	return req
+}
+
+http.Agent = function () {}
+http.Agent.defaultMaxSockets = 4
+
+http.STATUS_CODES = statusCodes
+
+http.METHODS = [
+	'CHECKOUT',
+	'CONNECT',
+	'COPY',
+	'DELETE',
+	'GET',
+	'HEAD',
+	'LOCK',
+	'M-SEARCH',
+	'MERGE',
+	'MKACTIVITY',
+	'MKCOL',
+	'MOVE',
+	'NOTIFY',
+	'OPTIONS',
+	'PATCH',
+	'POST',
+	'PROPFIND',
+	'PROPPATCH',
+	'PURGE',
+	'PUT',
+	'REPORT',
+	'SEARCH',
+	'SUBSCRIBE',
+	'TRACE',
+	'UNLOCK',
+	'UNSUBSCRIBE'
+]
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2014-present, Facebook, Inc.
@@ -2555,7 +2640,7 @@ module.exports = ReactElement;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2673,91 +2758,6 @@ module.exports = PooledClass;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(254)
-var extend = __webpack_require__(265)
-var statusCodes = __webpack_require__(266)
-var url = __webpack_require__(267)
-
-var http = exports
-
-http.request = function (opts, cb) {
-	if (typeof opts === 'string')
-		opts = url.parse(opts)
-	else
-		opts = extend(opts)
-
-	// Normally, the page is loaded from http or https, so not specifying a protocol
-	// will result in a (valid) protocol-relative url. However, this won't work if
-	// the protocol is something else, like 'file:'
-	var defaultProtocol = global.location.protocol.search(/^https?:$/) === -1 ? 'http:' : ''
-
-	var protocol = opts.protocol || defaultProtocol
-	var host = opts.hostname || opts.host
-	var port = opts.port
-	var path = opts.path || '/'
-
-	// Necessary for IPv6 addresses
-	if (host && host.indexOf(':') !== -1)
-		host = '[' + host + ']'
-
-	// This may be a relative url. The browser should always be able to interpret it correctly.
-	opts.url = (host ? (protocol + '//' + host) : '') + (port ? ':' + port : '') + path
-	opts.method = (opts.method || 'GET').toUpperCase()
-	opts.headers = opts.headers || {}
-
-	// Also valid opts.auth, opts.mode
-
-	var req = new ClientRequest(opts)
-	if (cb)
-		req.on('response', cb)
-	return req
-}
-
-http.get = function get (opts, cb) {
-	var req = http.request(opts, cb)
-	req.end()
-	return req
-}
-
-http.Agent = function () {}
-http.Agent.defaultMaxSockets = 4
-
-http.STATUS_CODES = statusCodes
-
-http.METHODS = [
-	'CHECKOUT',
-	'CONNECT',
-	'COPY',
-	'DELETE',
-	'GET',
-	'HEAD',
-	'LOCK',
-	'M-SEARCH',
-	'MERGE',
-	'MKACTIVITY',
-	'MKCOL',
-	'MOVE',
-	'NOTIFY',
-	'OPTIONS',
-	'PATCH',
-	'POST',
-	'PROPFIND',
-	'PROPPATCH',
-	'PURGE',
-	'PUT',
-	'REPORT',
-	'SEARCH',
-	'SUBSCRIBE',
-	'TRACE',
-	'UNLOCK',
-	'UNSUBSCRIBE'
-]
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
-
-/***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
@@ -2808,7 +2808,7 @@ var _assign = __webpack_require__(5);
 var ReactBaseClasses = __webpack_require__(72);
 var ReactChildren = __webpack_require__(123);
 var ReactDOMFactories = __webpack_require__(127);
-var ReactElement = __webpack_require__(19);
+var ReactElement = __webpack_require__(20);
 var ReactPropTypes = __webpack_require__(131);
 var ReactVersion = __webpack_require__(133);
 
@@ -10135,7 +10135,7 @@ module.exports = getIteratorFn;
 
 var ReactCurrentOwner = __webpack_require__(14);
 var ReactComponentTreeHook = __webpack_require__(9);
-var ReactElement = __webpack_require__(19);
+var ReactElement = __webpack_require__(20);
 
 var checkReactTypeSpec = __webpack_require__(128);
 
@@ -11101,7 +11101,7 @@ var _prodInvariant = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 
 var invariant = __webpack_require__(1);
 
@@ -16619,7 +16619,7 @@ function done(stream, er, data) {
 "use strict";
 
 
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 // Calls callback(x) where x is a user object or null if not logged in
 
@@ -16748,7 +16748,7 @@ var App = function (_React$Component) {
 
 
 var PooledClass = __webpack_require__(124);
-var ReactElement = __webpack_require__(19);
+var ReactElement = __webpack_require__(20);
 
 var emptyFunction = __webpack_require__(10);
 var traverseAllChildren = __webpack_require__(125);
@@ -17307,7 +17307,7 @@ module.exports = KeyEscapeUtils;
 
 
 
-var ReactElement = __webpack_require__(19);
+var ReactElement = __webpack_require__(20);
 
 /**
  * Create a factory that creates HTML tag elements.
@@ -17628,7 +17628,7 @@ module.exports = ReactPropTypesSecret;
 
 
 
-var _require = __webpack_require__(19),
+var _require = __webpack_require__(20),
     isValidElement = _require.isValidElement;
 
 var factory = __webpack_require__(77);
@@ -17743,7 +17743,7 @@ module.exports = '15.6.1';
 var _require = __webpack_require__(72),
     Component = _require.Component;
 
-var _require2 = __webpack_require__(19),
+var _require2 = __webpack_require__(20),
     isValidElement = _require2.isValidElement;
 
 var ReactNoopUpdateQueue = __webpack_require__(73);
@@ -18649,7 +18649,7 @@ module.exports = factory;
 
 var _prodInvariant = __webpack_require__(24);
 
-var ReactElement = __webpack_require__(19);
+var ReactElement = __webpack_require__(20);
 
 var invariant = __webpack_require__(1);
 
@@ -19380,7 +19380,7 @@ module.exports = BeforeInputEventPlugin;
 
 var _assign = __webpack_require__(5);
 
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 
 var getTextContentAccessor = __webpack_require__(82);
 
@@ -25542,7 +25542,7 @@ module.exports = flattenChildren;
 
 var _assign = __webpack_require__(5);
 
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 var Transaction = __webpack_require__(40);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactServerUpdateQueue = __webpack_require__(187);
@@ -26233,7 +26233,7 @@ var _assign = __webpack_require__(5);
 
 var EventListener = __webpack_require__(99);
 var ExecutionEnvironment = __webpack_require__(7);
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
 
@@ -26475,7 +26475,7 @@ module.exports = ReactInjection;
 var _assign = __webpack_require__(5);
 
 var CallbackQueue = __webpack_require__(83);
-var PooledClass = __webpack_require__(20);
+var PooledClass = __webpack_require__(21);
 var ReactBrowserEventEmitter = __webpack_require__(44);
 var ReactInputSelection = __webpack_require__(100);
 var ReactInstrumentation = __webpack_require__(11);
@@ -32180,7 +32180,7 @@ module.exports = { LoginPage: LoginPage };
 
 // var fs = require('fs');
 // var request = require('request');
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 function sendLoginRequest(email, password, callback) {
 
@@ -35211,7 +35211,7 @@ module.exports = { SignUpPage: SignUpPage };
 
 // var fs = require('fs');
 // var request = require('request');
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 function sendSignUpRequest(name, email, password, callback) {
 
@@ -35397,15 +35397,15 @@ var _GroupThumb = __webpack_require__(279);
 
 var _GroupDetails = __webpack_require__(280);
 
-var _AddGroup = __webpack_require__(283);
+var _AddGroup = __webpack_require__(285);
 
 var _getUserInfo = __webpack_require__(121);
 
-var _getGroupNames = __webpack_require__(284);
+var _getGroupNames = __webpack_require__(286);
 
-var _getGroupObject = __webpack_require__(285);
+var _getGroupObject = __webpack_require__(287);
 
-var _addGroupRequest = __webpack_require__(286);
+var _addGroupRequest = __webpack_require__(288);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35605,9 +35605,13 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddFund = __webpack_require__(281);
+var _AddGroupMember = __webpack_require__(281);
 
-var _addFund = __webpack_require__(282);
+var _addUserToGroup = __webpack_require__(282);
+
+var _AddFund = __webpack_require__(283);
+
+var _addFund = __webpack_require__(284);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35626,6 +35630,8 @@ var GroupDetails = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (GroupDetails.__proto__ || Object.getPrototypeOf(GroupDetails)).call(this, props));
 
         _this.addFund = _addFund.addFund.bind(_this);
+        _this.addMemberSubmit = _this.addMemberSubmit.bind(_this);
+        _this.addMemberCallback = _this.addMemberCallback.bind(_this);
 
         _this.state = {
             users: props.group ? props.group.users : null,
@@ -35641,6 +35647,21 @@ var GroupDetails = function (_React$Component) {
                 users: nextProps.group ? nextProps.group.users : null,
                 funds: nextProps.group ? nextProps.group.funds : null
             });
+        }
+    }, {
+        key: 'addMemberSubmit',
+        value: function addMemberSubmit(email) {
+            console.log('Add member submit');
+            (0, _addUserToGroup.addUserToGroup)(this.props.group.group_id, email, this.addMemberCallback);
+        }
+    }, {
+        key: 'addMemberCallback',
+        value: function addMemberCallback(res, newUser) {
+            if (res.statusCode == 200) {
+                console.log('member added');
+            } else {
+                console.log('Error in addMemberCallback: ' + res.statusCode);
+            }
         }
     }, {
         key: 'render',
@@ -35663,7 +35684,8 @@ var GroupDetails = function (_React$Component) {
                                 { className: 'user-thumb', key: u.user_id },
                                 u.name
                             );
-                        })
+                        }),
+                        _react2.default.createElement(_AddGroupMember.AddGroupMember, { handleSubmit: this.addMemberSubmit })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -35702,7 +35724,6 @@ var GroupDetails = function (_React$Component) {
         key: 'addFundCallback',
         value: function addFundCallback(res, fund) {
             if (res.statusCode == 200) {
-                console.log(fund);
                 var newFunds = this.state.funds.slice();
                 newFunds.push(JSON.parse(fund));
                 this.setState({ funds: newFunds });
@@ -35719,6 +35740,154 @@ module.exports = { GroupDetails: GroupDetails };
 
 /***/ }),
 /* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddGroupMember = function (_React$Component) {
+    _inherits(AddGroupMember, _React$Component);
+
+    function AddGroupMember(props) {
+        _classCallCheck(this, AddGroupMember);
+
+        var _this = _possibleConstructorReturn(this, (AddGroupMember.__proto__ || Object.getPrototypeOf(AddGroupMember)).call(this, props));
+
+        _this.state = { mode: 'button', email: '' };
+
+        // Bind functions
+        _this.openForm = _this.openForm.bind(_this);
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.cancel = _this.cancel.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddGroupMember, [{
+        key: 'openForm',
+        value: function openForm(e) {
+            this.setState({ mode: 'form' });
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(e) {
+            this.setState({ email: e.target.value });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            this.props.handleSubmit(this.state.email);
+            this.cancel();
+        }
+    }, {
+        key: 'cancel',
+        value: function cancel(e) {
+            if (e) e.preventDefault();
+            this.setState({ mode: 'button', email: '' });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            if (this.state.mode == 'button') {
+                return _react2.default.createElement(
+                    'button',
+                    { className: 'add-group-btn', onClick: this.openForm },
+                    'Add member'
+                );
+            } else if (this.state.mode == 'form') {
+                return _react2.default.createElement(
+                    'form',
+                    { onSubmit: this.handleSubmit, className: 'add-form' },
+                    _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'group-name' },
+                        'Member email'
+                    ),
+                    _react2.default.createElement('input', { type: 'text', name: 'email', onChange: this.handleChange, value: this.state.email }),
+                    _react2.default.createElement('input', { type: 'submit' }),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.cancel },
+                        'Cancel'
+                    )
+                );
+            } else {
+                return null;
+            }
+        }
+    }]);
+
+    return AddGroupMember;
+}(_react2.default.Component);
+
+module.exports = { AddGroupMember: AddGroupMember };
+
+/***/ }),
+/* 282 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var http = __webpack_require__(19);
+
+function addUserToGroup(groupid, email, callback) {
+
+	var postData = {
+
+		"group_id": groupid,
+		"email": email
+	};
+
+	var options = {
+		method: 'POST',
+		path: '/api/groups/invite',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+
+	var req = http.request(options, function (res) {
+		var body = '';
+		res.setEncoding('utf8');
+		res.on('data', function (chunk) {
+			body += chunk.toString();
+		});
+
+		res.on('end', function () {
+			console.log('Add user to group end');
+			var bodyJSON = JSON.parse(body);
+			callback(res, bodyJSON);
+		});
+
+		res.on('error', function (e) {
+			console.log("Error: " + e.message);
+		});
+	});
+
+	req.write(JSON.stringify(postData));
+	req.end();
+}
+
+module.exports = { addUserToGroup: addUserToGroup };
+
+/***/ }),
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35817,13 +35986,13 @@ var AddFund = function (_React$Component) {
 module.exports = { AddFund: AddFund };
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 function addFund(name, groupid, callback) {
 
@@ -35848,7 +36017,8 @@ function addFund(name, groupid, callback) {
 		});
 
 		res.on('end', function () {
-			callback(res, body);
+			var bodyJSON = JSON.parse(body);
+			callback(res, bodyJSON);
 		});
 
 		res.on('error', function (e) {
@@ -35863,7 +36033,7 @@ function addFund(name, groupid, callback) {
 module.exports = { addFund: addFund };
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35936,7 +36106,7 @@ var AddGroup = function (_React$Component) {
             } else if (this.state.mode == 'form') {
                 return _react2.default.createElement(
                     'form',
-                    { onSubmit: this.handleSubmit, className: 'add-group-form' },
+                    { onSubmit: this.handleSubmit, className: 'add-form group' },
                     _react2.default.createElement(
                         'label',
                         { htmlFor: 'group-name' },
@@ -35962,13 +36132,13 @@ var AddGroup = function (_React$Component) {
 module.exports = { AddGroup: AddGroup };
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 // Calls callback(x) where x is a user object or null if not logged in
 
@@ -36006,13 +36176,13 @@ function getGroupNames(callback) {
 module.exports = { getGroupNames: getGroupNames };
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 // Calls callback(x) where x is a user object or null if not logged in
 
@@ -36050,13 +36220,13 @@ function getGroupObject(groupId, callback) {
 module.exports = { getGroupObject: getGroupObject };
 
 /***/ }),
-/* 286 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var http = __webpack_require__(21);
+var http = __webpack_require__(19);
 
 function addGroupRequest(name, callback) {
 

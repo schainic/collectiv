@@ -65,12 +65,13 @@ form input[type="text"], form input[type="password"] {
     margin-bottom: 11px;
     outline: none; }
 
-.add-group-form {
+.add-form {
   background: #fff;
-  padding: 8px;
-  border-bottom: 4px solid #616161; }
-  .add-group-form button {
+  padding: 8px; }
+  .add-form button {
     margin-left: 8px; }
+  .add-form.group {
+    border-bottom: 4px solid #616161; }
 
 button, input[type="submit"], .btn {
   cursor: pointer;

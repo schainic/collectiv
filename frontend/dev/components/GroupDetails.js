@@ -1,4 +1,6 @@
 import React from 'react';
+import { AddGroupMember } from './AddGroupMember.js';
+import { addUserToGroup } from '../functions/addUserToGroup.js';
 
 import { AddFund } from './AddFund.js';
 import { addFund } from '../functions/addFund.js';
@@ -8,6 +10,8 @@ class GroupDetails extends React.Component {
         super(props);
 
         this.addFund = addFund.bind(this);
+        this.addMemberSubmit = this.addMemberSubmit.bind(this);
+        this.addMemberCallback = this.addMemberCallback.bind(this);
 
         this.state = {
             users: (props.group) ? props.group.users : null,
@@ -20,6 +24,20 @@ class GroupDetails extends React.Component {
             users: (nextProps.group) ? nextProps.group.users : null,
             funds: (nextProps.group) ? nextProps.group.funds : null
         });
+    }
+
+    addMemberSubmit(email) {
+        console.log('Add member submit');
+        addUserToGroup(this.props.group.group_id, email, this.addMemberCallback);
+    }
+
+    addMemberCallback(res, newUser) {
+        if (res.statusCode == 200) {
+            console.log('member added');
+        }
+        else {
+            console.log('Error in addMemberCallback: ' + res.statusCode);
+        }
     }
 
     render() {
@@ -35,6 +53,7 @@ class GroupDetails extends React.Component {
                                 </div>
                             );
                         })}
+                        <AddGroupMember handleSubmit={this.addMemberSubmit}/>
                     </div>
                     <div className="funds-list">
                         <h2>Funds</h2>

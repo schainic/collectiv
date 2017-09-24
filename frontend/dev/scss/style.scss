@@ -70,12 +70,14 @@ form {
     }
 }
 
-.add-group-form {
+.add-form {
     background: $white;
     padding: 8px;
-    border-bottom: 4px solid $gray;
     button {
         margin-left: 8px;
+    }
+    &.group {
+        border-bottom: 4px solid $gray;    
     }
 }
 

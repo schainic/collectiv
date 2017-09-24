@@ -10,28 +10,46 @@ class _GroupManager {
     AddUserToGroup(request, response) {
 
         Database.query(
-            `SELECT user_id
+            `SELECT Users.user_id, Users.name FROM Users
             WHERE Users.email = $1;`
             , [request.body.email]).then( result => {
-                let newGroupsUsers = {
-                    user_id: result.rows[0],
-                    group_id: request.body.group_id
-                    };
 
-                    if(newGroupsUsers.user_id != null)
-                    {
-                        Database.query("INSERT INTO GroupsUsers (user_id, group_id) VALUES ($1, $2);",
-                        [newGroupsUsers.group_id, newGroupsUsers.user_id]).then(GUresult => {
-
-                            response.status(200);
+                if(result.rows.length > 0)
+                {
+                    let newGroupsUsers = {
+                        user_id: result.rows[0].user_id,
+                        group_id: request.body.group_id
+                        };
+    
+                        if(newGroupsUsers.user_id != null)
+                        {
+                            Database.query("INSERT INTO GroupsUsers (user_id, group_id) VALUES ($1, $2);",
+                            [newGroupsUsers.user_id, newGroupsUsers.group_id]).then(GUresult => {
+                                
+                                var AddedUser = {
+                                    name: result.rows[0].name,
+                                    user_id: newGroupsUsers.user_id
+                                };
+    
+    
+                                response.status(200).json(AddedUser);
+                                response.end();
+                            });
+                        }
+                        else
+                        {
+                            response.status(500);
                             response.end();
-                        });
-                    }
-                    else
-                    {
-                        response.status(500);
-                        response.end();
-                    }
+                        }
+                }
+                else
+                {
+                    response.status(500);
+                    response.end();
+                }
+
+
+                
 
             });
     }
