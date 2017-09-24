@@ -22,7 +22,8 @@ function addGroupRequest(name, callback) {
 		});
 
 		res.on('end', () => {
-			callback(res, body);
+			var bodyJson = JSON.parse(body);
+			callback(res, bodyJson);
 		});
 
 		res.on('error', (e) => {

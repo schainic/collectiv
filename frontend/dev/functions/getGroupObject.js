@@ -18,7 +18,6 @@ function getGroupObject(groupId, callback) {
 
 		res.on('end', () => {
 			if (res.statusCode == 200) {
-				console.log(body);
 				var resData = JSON.parse(body);
 				callback(resData)
 			}
