@@ -27,13 +27,14 @@ class GroupDetails extends React.Component {
     }
 
     addMemberSubmit(email) {
-        console.log('Add member submit');
         addUserToGroup(this.props.group.group_id, email, this.addMemberCallback);
     }
 
     addMemberCallback(res, newUser) {
         if (res.statusCode == 200) {
-            console.log('member added');
+            var newUsers = this.state.users.slice();
+            newUsers.push(newUser);
+            this.setState({users: newUsers});
         }
         else {
             console.log('Error in addMemberCallback: ' + res.statusCode);
