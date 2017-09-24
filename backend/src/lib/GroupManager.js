@@ -7,6 +7,33 @@ class _GroupManager {
 
     }
 
+    AddUserToGroup(request, response) {
+
+        Database.query(
+            `SELECT user_id
+            WHERE Users.email = $1;`
+            , [request.body.email]).then( result => {
+                let newGroupsUsers = {
+                    user_id: result.rows[0],                    
+                    group_id: request.body.group_id
+                    };
+
+                    if(newGroupsUsers.user_id != null)
+                    {
+                        Database.query("INSERT INTO GroupsUsers (user_id, group_id) VALUES ($1, $2);",
+                        [newGroupsUsers.group_id, newGroupsUsers.user_id]).then(GUresult => {
+                         
+                            response.status(200);                        
+                        });
+                    }
+                    else
+                    {
+                        response.status(500);                                                
+                    }
+
+            });
+    }
+
     GetGroupInfo(Group_id) {
         return Database.query("SELECT * FROM Groups WHERE group_id = $1", [Group_id]);
     }
@@ -64,7 +91,7 @@ class _GroupManager {
                     account_id: newAccount.objectCreated._id,
                     };
         
-                let result = Database.query(`WITH new_group AS (
+                Database.query(`WITH new_group AS (
                     INSERT INTO Groups (group_name, customer_id, account_id) VALUES ($1,$2,$3)
                     RETURNING group_id
                     ),
