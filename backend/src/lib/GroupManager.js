@@ -93,12 +93,12 @@ class _GroupManager {
         
                 Database.query(`WITH new_group AS (
                     INSERT INTO Groups (group_name, customer_id, account_id) VALUES ($1,$2,$3)
-                    RETURNING group_id
+                    RETURNING group_id, group_name
                     ),
                     groups_users AS (
                     INSERT INTO GroupsUsers (group_id, user_id) VALUES ((SELECT group_id FROM new_group), $4)
                     )
-                    SELECT group_id FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
+                    SELECT group_id, group_name FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
                     .then(result => {
                         Qresult = result.rows[0];   
                         response.status(200).json(Qresult);
