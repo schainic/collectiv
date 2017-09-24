@@ -68,6 +68,7 @@ class GroupDetails extends React.Component {
                     break;
                 }
             }
+            console.log(fund);
             this.setState({funds: newFunds});
         }
         else {
