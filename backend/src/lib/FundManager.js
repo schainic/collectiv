@@ -8,6 +8,16 @@ class _FundManager {
 
     }
 
+	addFund(request, response) {
+		let user_id = request.user.user_id;
+		let group_id = request.body.group_id;
+		let fund_name = request.body.fund_name;
+
+		Database.query("INSERT INTO Funds(fund_name, master_user_id, group_id) VALUES($1, $2, $3)", [fund_name, user_id, group_id]).then(result => {
+			response.status(200).json({ message: "ok" });
+		});
+	}
+
     transferToFund(request, response) {
         let user_id = request.user.user_id;
         let group_id = request.body.group_id;
