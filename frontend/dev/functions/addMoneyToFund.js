@@ -5,7 +5,7 @@ function addMoneyToFund(groupid, fundid, amount, callback) {
 	var postData = {
 
 		"group_id": groupid,
-		"fund_id": name,
+		"fund_id": fundid,
 		"amount": amount
 	};
 
