@@ -58,9 +58,11 @@ class GroupsPage extends React.Component {
     }
 
     addGroupCallback(res, group) {
-        console.log(group);
         if (res.statusCode == 200) {
-            getGroupObject(group.group_id, loadGroupDescription);
+            var newGroups = this.state.groupsList.slice();
+            newGroups.push(group);
+            this.setState({groupsList: newGroups});
+            getGroupObject(group.group_id, this.loadGroupDescription);
         }
         else {
             console.error('Bad result: ' + res.statusCode);

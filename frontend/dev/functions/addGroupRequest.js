@@ -2,8 +2,6 @@ const http = require('http');
 
 function addGroupRequest(name, callback) {
 
-	console.log('Top of addGroupRequest');
-
 	var postData = {
 		"group_name": name,
 	};
@@ -24,7 +22,6 @@ function addGroupRequest(name, callback) {
 		});
 
 		res.on('end', () => {
-			console.log('Response end');
 			var bodyJson = JSON.parse(body);
 			callback(res, bodyJson);
 		});
