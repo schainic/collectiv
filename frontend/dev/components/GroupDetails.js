@@ -1,14 +1,38 @@
 import React from 'react';
+import { AddGroupMember } from './AddGroupMember.js';
+import { addUserToGroup } from '../functions/addUserToGroup.js';
 
 class GroupDetails extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            group: props.group;
+        }
+
+        this.addUserToGroup = this.addUserToGroup.bind(this);
+        this.addMemberCallback = this.addMemberCallback.bind(this);
+    }
+
+    addMemberSubmit(email) {
+        addUserToGroup(this.state.group.group_id, email, this.addMemberCallback);
+    }
+
+    addMemberCallback(res, newUser) {
+        if (res.statusCode == 200) {
+            var newGroup = Object.assign(this.state.group, {});
+            newGroup.users.push(newUser);
+            this.setState({group: newGroup});
+        }
+        else {
+            console.log('Error in addMemberCallback: ' + res.statusCode);
+        }
     }
 
     render() {
-        if (this.props.group) {
-            var users = this.props.group.users;
-            var funds = this.props.group.funds;
+        if (this.state.group) {
+            var users = this.state.group.users;
+            var funds = this.state.group.funds;
             return (
                 <div className="group-details-content">
                     <div className="users-list">
@@ -20,6 +44,7 @@ class GroupDetails extends React.Component {
                                 </div>
                             );
                         })}
+                        <AddGroupMember/>
                     </div>
                     <div className="funds-list">
                         <h2>Funds</h2>
