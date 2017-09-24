@@ -35680,7 +35680,7 @@ var GroupDetails = function (_React$Component) {
                 var amount = parseInt(prompt('How much money would you like to add to this fund? Please enter an amount in USD.', 0));
                 if (!isNaN(amount)) {
                     var group_id = _this2.props.group.group_id;
-                    (0, _addMoneyToFund.addMoneyToFund)(parseInt(group_id), fid, amount, _this2.depositCallback);
+                    (0, _addMoneyToFund.addMoneyToFund)(parseInt(group_id), parseInt(fid), amount, _this2.depositCallback);
                 } else {
                     alert('Invalid input.');
                 }
