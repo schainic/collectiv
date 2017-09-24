@@ -12,7 +12,7 @@ A group payment system made possible by Capital One's API
 #### Front end
 One page React.js web application and SCSS
 #### Back end
-Node.js and MongoDB
+Node.js and Postgres SQL
 
 ## Team
 #### Front end
