@@ -112,7 +112,6 @@ class _CapitalOneApiManager {
                 res.setEncoding('utf8');
                 res.on('data', function (chunk) {
                     // console.log('Response: ' + chunk);
-                    resolve(JSON.parse(chunk));
                 });
             });
 
