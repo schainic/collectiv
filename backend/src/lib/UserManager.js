@@ -23,6 +23,7 @@ class _UserManager {
                 , [User_id]).then(result => {
              Qresult = result.rows;   
              response.status(200).json(Qresult);
+             response.end();
              
             });
               
@@ -31,6 +32,7 @@ class _UserManager {
                 console.log(Qresult);
                 
                 response.status(500).json({"Error":"Can't retrieve user's groups"});
+                response.end();                
             }
             console.log(Qresult);
             

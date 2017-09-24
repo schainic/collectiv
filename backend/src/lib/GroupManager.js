@@ -103,8 +103,8 @@ class _GroupManager {
                     )
                     SELECT group_id, group_name FROM new_group;`,[newGroup.group_name, newGroup.customer_id,newGroup.account_id, request.user.user_id])
                     .then(result => {
-                        Qresult = result.rows[0];   
-                        response.status(200).json(result);
+                        let Qresult = result.rows[0];   
+                        response.status(200).json(Qresult);
                         respose.end();
                        });
         
