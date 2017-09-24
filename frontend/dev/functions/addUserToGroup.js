@@ -24,7 +24,8 @@ function addUserToGroup(groupid, email, callback) {
 		});
 
 		res.on('end', () => {
-			callback(res, body);
+			var bodyJSON = JSON.parse(body);
+			callback(res, bodyJSON);
 		});
 
 		res.on('error', (e) => {
