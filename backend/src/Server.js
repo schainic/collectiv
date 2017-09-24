@@ -55,13 +55,18 @@ class _Server {
 
 		this._server.get("/api/groups", UserManager.GetUsersGroups.bind(UserManager));
 		this._server.post("/api/groups/add", GroupManager.CreateGroup.bind(GroupManager));
-
+		this._server.post("/api/groups/invite", GroupManager.AddUserToGroup.bind(GroupManager));
+		
 		//give this request id=<GroupID>
 		this._server.get("/api/group", GroupManager.GetGroupAndCollections.bind(GroupManager));
 
+		this._server.post("/api/fund/add", FundManager.addFund.bind(FundManager));
         this._server.post("/api/fund/transfer", FundManager.transferToFund.bind(FundManager));
 
 		this._server.get("/api/*", (request, response, next) => { response.end(); });
+
+		this._server.get("/mango", (request, response) => { response.sendFile(path.resolve(__dirname, "../../mango.jpg")); });
+		this._server.get("/kiwi", (request, response) => { response.sendFile(path.resolve(__dirname, "../../kiwi.jpg")); });
 
 		this._server.get("*", (request, response, next) => {
 			response.sendFile(path.resolve(__dirname, "../../index.html"));

@@ -8,7 +8,6 @@ import { getGroupNames } from '../functions/getGroupNames.js';
 import { getGroupObject } from '../functions/getGroupObject.js';
 import { addGroupRequest } from '../functions/addGroupRequest.js';
 
-
 class GroupsPage extends React.Component {
 
     constructor(props) {
