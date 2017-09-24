@@ -1,5 +1,5 @@
 import Database from "./Database.js";
-
+import CapitalOneApiManager from "./CapitalOneApiManager.js";
 
 class _GroupManager {
 
