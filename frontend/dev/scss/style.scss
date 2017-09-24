@@ -102,7 +102,10 @@ button, input[type="submit"], .btn {
 }
 
 .deposit-btn {
-    float: right;
+    position: absolute;
+    right: 64px;
+    top: 50%;
+    transform: translateY(-50%);
     padding: 0px;
     font-family: sans-serif;
     min-width: auto;
@@ -153,10 +156,28 @@ div.groups-wrapper {
         position: relative;
         .group-details-content {
             display: flex;
-            div {
+            & > div {
                 padding: 8px;
                 width: calc(50% - 16px);
+                position: relative;
             }
         }
+        .fund-thumb {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 32px;
+            strong {
+                margin-right: 12px;
+            }
+        }
+    }
+    .details-filler {
+        color: $green;
+        display: flex;
+        height: 30vh;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 }

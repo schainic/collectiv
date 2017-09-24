@@ -110,7 +110,11 @@ class GroupDetails extends React.Component {
             )
         }
         else {
-            return null;
+            return (
+                <div className="details-filler">
+                    <h1>&larr; Select or add a group</h1>
+                </div>
+            )
         }
     }
 
