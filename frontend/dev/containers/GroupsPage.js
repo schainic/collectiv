@@ -6,7 +6,6 @@ import { getUserInfo } from '../functions/getUserInfo.js';
 import { getGroupNames } from '../functions/getGroupNames.js';
 import { getGroupObject } from '../functions/getGroupObject.js';
 
-
 class GroupsPage extends React.Component {
 
     constructor(props) {
