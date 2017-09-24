@@ -56,7 +56,7 @@ class _CapitalOneApiManager {
                 "type": "Savings",
                 "nickname": "test account",
                 "rewards": 0,
-                "balance": 0
+                "balance": 9999
             };
 
             let key = Config.capitalOne.ApiKey;
